@@ -1,0 +1,12 @@
+web/bundles/
+app/bootstrap.php.cache
+app/cache/*
+app/logs/*
+build/
+vendor
+web/cron/logs/*
+web/cron/cookies/*
+web/cron/locks/*
+web/cron/config.php
+/nbproject/private/
+web/.htaccess
