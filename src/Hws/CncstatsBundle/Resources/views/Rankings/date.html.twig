@@ -1,0 +1,13 @@
+<div style="float: left; padding-top: 15px;">
+    Ranking for: {{ rankingDates }}
+</div>
+<div style="float: right">
+    <select name="periodType" class="select-style" id="periodType">
+        <option value="day">day</option>
+        <option value="week"{% if period == 'week' %} selected="selected"{% endif %}>week</option>
+        <option value="month"{% if period == 'month' %} selected="selected"{% endif %}>month</option>
+    </select>
+    <input type="text" name="rankingDate" class="search_field" id="rankingDate" style="margin-top: 7px;" value="{{ selectedDate }}" />
+    <input type="button" value="Change date" id="rankingDateButton" class="search_button" style="" />
+</div>
+<div style="clear: both"></div>

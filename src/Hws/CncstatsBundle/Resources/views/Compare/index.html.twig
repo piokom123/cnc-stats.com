@@ -1,0 +1,59 @@
+{% extends '::base.html.twig' %}
+{% block title %}Compare players or alliances on {{ world.name }} - {% endblock %}
+{% block body %}
+		<div id="content-full">
+		    <input type="hidden" value="{{ world.externalId }}" id="worldId" />
+		    <div id="box1">
+			    <h2 class="title">Compare players or alliances on {{ world.name }}</h2>
+			    <div style="text-align: center"><a href="{{ url('alliances_world', {'world': world.externalId}) }}">alliances list</a></div>
+			    <div style="text-align: center"><a href="{{ url('players_world', {'world': world.externalId}) }}">members list</a></div>
+		    </div>
+		    <div>
+			<h3 class="headtext">What you want to compare?</h3>
+			<div style="text-align: center">
+			    <input type="button" value="Alliances" class="button-style" id="showCompareDivButtonAlliances" /> &nbsp; &nbsp; &nbsp; <input type="button" value="Players" class="button-style" id="showCompareDivButtonPlayers" />
+			</div>
+		    </div>
+
+		    <div style="padding-top: 20px">
+			<div class="compareDivs" id="compareDivAlliances" style="display: none">
+			    <div style="width: 45%; float: left; text-align: center">
+				<input type="hidden" name="itemFirstId" id="itemFirstAllianceId" />
+				<input type="text" name="itemFirst" class="button-style" id="itemFirstAlliance" style="margin-top: 7px;" />
+			    </div>
+			    <div style="width: 10%; float: left; font-size: 40px; text-align: center">
+				VS
+			    </div>
+			    <div style="width: 40%; float: left; text-align: center">
+				<input type="hidden" name="itemSecondId" id="itemSecondAllianceId" />
+				<input type="text" name="itemSecond" class="button-style" id="itemSecondAlliance" style="margin-top: 7px;" />
+			    </div>
+			    <div style="clear: both"></div>
+			    <div style="text-align: center; padding-top: 20px;">
+				<input type="submit" value="Compare alliances!" style="font-size: 25px; height: 35px" id="compareAlliances" class="button-style" />
+			    </div>
+			</div>
+			<div class="compareDivs" id="compareDivPlayers" style="display: none">
+			    <div style="width: 45%; float: left; text-align: center">
+				<input type="hidden" name="itemFirstId" id="itemFirstPlayerId" />
+				<input type="text" name="itemFirst" class="button-style" id="itemFirstPlayer" style="margin-top: 7px;" />
+			    </div>
+			    <div style="width: 10%; float: left; font-size: 40px; text-align: center">
+				VS
+			    </div>
+			    <div style="width: 40%; float: left; text-align: center">
+				<input type="hidden" name="itemSecondId" id="itemSecondPlayerId" />
+				<input type="text" name="itemSecond" class="button-style" id="itemSecondPlayer" style="margin-top: 7px;" />
+			    </div>
+			    <div style="clear: both"></div>
+			    <div style="text-align: center; padding-top: 20px;">
+				<input type="submit" value="Compare players!" style="font-size: 25px; height: 35px" id="comparePlayers" class="button-style" />
+			    </div>
+			</div>
+		    </div>
+		</div>
+{% endblock %}
+{% block javascripts %}
+<script src="/bundles/hwscncstats/js/compareLib.js"></script>
+<script src="/bundles/hwscncstats/js/compare.js"></script>
+{% endblock %}

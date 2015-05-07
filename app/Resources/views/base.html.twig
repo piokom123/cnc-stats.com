@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+{% set version = '1002' %}
+    <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="{% block keywords %}{% endblock %}command and conquer, tiberium alliances, statistics, historical, compare, charts, {{ world.name }}" />
+	<meta name="description" content="{% block description %}C&C Tiberium Alliances historical statistics charts and comparison tools, {{ world.name }}{% endblock %}" />
+	<title>{% block title %}{% endblock %}CNC-Stats.com C&amp;C Tiberium Alliances Statistics</title>
+	<link rel="stylesheet" href="/bundles/hwscncstats/css/default.css?v={{ version }}" type="text/css" />
+        {% block stylesheets %}
+	{% endblock %}
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" type="text/css" />
+	<link rel="Shortcut icon" href="/bundles/hwscncstats/images/icon.ico" />
+    </head>
+    <body>
+	<div id="wrapper">
+	    <div id="header-wrapper">
+		<div id="header" class="container">
+		    <div id="logo">
+			<h1><a href="{{ url('homepage') }}">CNC-stats.com</a></h1>
+		    </div>
+		    <div id="menu">
+			<ul>
+			    <li><a href="{{ url('alliances_world', {'world': world.externalId}) }}" title="">Alliances</a></li>
+			    <li><a href="{{ url('players_world', {'world': world.externalId}) }}" title="">Players</a></li>
+			    <li><a href="{{ url('bases_world', {'world': world.externalId}) }}" title="">Bases</a></li>
+			    {#<li><a href="{{ url('signature_world', {'world': world.externalId}) }}" title=""><b>Signature</b></a></li>#}
+			    <li><a href="{{ url('pois_world', {'world': world.externalId}) }}" title="">POIs</a></li>
+			    {#<li><a href="{{ url('world_rankings', {'world': world.externalId}) }}" title="">Rankings</a></li>#}
+			    <li><a href="{{ url('compare_world', {'world': world.externalId}) }}" title="">Compare</a></li>
+			    <li><a href="{{ url('thanks') }}" title=""><b>Donate / Contact</b></a></li>
+			</ul>
+		    </div>
+		</div>
+	    </div>
+	    <div id="page" class="container">
+        {% if app.session.hasFlash('notice') %}
+            <div style="padding: 25px; width: 100%; text-align: center; color: orange">{{ app.session.getFlash('notice')|nl2br }}</div>
+        {% endif %}
+        {% block body %}{% endblock %}
+        {% if baseUrl is defined %}
+            <input type="hidden" id="baseUrl" value="{{ baseUrl }}" />
+        {% endif %}
+	    </div>
+        <div id="rightPanel" style="position: absolute">
+            
+            {% if showDatePanel is defined %}
+            <div>
+                {% include 'HwsCncstatsBundle::date.html.twig' %}
+            </div>
+            {% endif %}
+        </div>
+	    <div id="footer">
+		<p>Copyright (c) 2013-2015 CNC-Stats.com powered by <a href="http://hws.pl">High-quality Web Solutions</a>. All rights reserved. <br />Design by <a href="http://www.freecsstemplates.org">FCT</a>. Photos by <a href="http://fotogrph.com/">Fotogrph</a>.</p>
+	    </div>
+	</div>
+
+	<div class="cookieWarningBox"></div>
+	<div class="donationBox"></div>
+	<div class="advertWarningBox"></div>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
+        {% block javascripts %}{% endblock %}
+    
+    {% if showDatePanel is defined %}
+    <script type="text/javascript" src="/bundles/hwscncstats/js/dateLib.js?v={{ version }}"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            enableNewDateChange();
+        });
+    </script>
+    {% endif %}
+
+	<script type="text/javascript" src="/bundles/hwscncstats/js/globalLib.js?v={{ version }}"></script>
+	<script type="text/javascript" src="/bundles/hwscncstats/js/advertAlert.js?v={{ version }}"></script>
+	<script type="text/javascript" src="/bundles/hwscncstats/js/cookieAlert.js?v={{ version }}"></script>
+	<script type="text/javascript" src="/bundles/hwscncstats/js/donationAlert.js?v={{ version }}"></script>
+
+    </body>
+</html>

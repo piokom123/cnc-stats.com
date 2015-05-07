@@ -1,0 +1,178 @@
+{% extends '::base.html.twig' %}
+{% block title %}Alliance {{ item.name }} on {{ world.name }} on {{ selectedDate }}- {% endblock %}
+{% block keywords %}alliance {{ item.name }} statistics, alliance {{ item.name }} score, {{ item.name }}, {% endblock %}
+{% block description %}C&amp;C Tiberium Alliances {{ item.name }} alliance detailed statistics{% endblock %}
+{% block body %}
+		<div id="content-full">
+			<div id="box1">
+				<h2 class="title">Alliance "{{ item.name }}" on {{ world.name }}</h2>
+				<div style="text-align: center"><a href="{{ url('alliances_world_type_date', {'world': world.externalId, 'date': selectedDate}) }}">go back to list</a></div>
+                <div style="text-align: right">Situation on {{ selectedDate }}</div>
+			</div>
+			<div>
+			    <h3 class="headtext">Basic informations</h3>
+			    <table width="70%" style="margin-left: auto; margin-right: auto;">
+				<tr>
+				    {% if item.externalId == 0 %}
+				    <td colspan="4" style="text-align: center; padding: 25px; color: yellow">This is "virtual" alliance that shows stats of all players without alliances.</td>
+				    {% else %}
+				    <td width="30%">Name:</td>
+				    <td width="18%">{{ item.name }}</td>
+				    <td width="30%">Abbreviation:</td>
+				    <td width="22%">{{ item.nameShort }}</td>
+				    {% endif %}
+				</tr>
+				<tr>
+				    <td>Ranking:</td>
+				    <td>{{ item.scoreRanking|number_format(0, '.', ',') }}</td>
+				    <td>Members:</td>
+				    <td>{{ item.membersCount }}</td>
+				</tr>
+				<tr>
+				    <td>Total score:</td>
+				    <td>{{ item.scoreOverall|number_format(0, '.', ',') }}</td>
+				    <td>Total score ranking:</td>
+				    <td>{{ item.scoreRanking }}</td>
+				</tr>
+				<tr>
+				    <td>Top 40 score:</td>
+				    <td>{{ item.scoreTop|number_format(0, '.', ',') }}</td>
+				    <td>Top 40 score ranking:</td>
+				    <td>{{ item.scoreTopRanking }}</td>
+				</tr>
+				<tr>
+				    <td>Average score:</td>
+				    <td>{{ item.scoreAverage|number_format(0, '.', ',') }}</td>
+				    <td>Average score ranking:</td>
+				    <td>{{ item.scoreAverageRanking }}</td>
+				</tr>
+                {% if item.pois is defined %}
+				<tr>
+				    <td> </td>
+				    <td> </td>
+				    <td>Points of interest:</td>
+				    <td>{{ item.pois }}</td>
+				</tr>
+                {% endif %}
+				<tr>
+				    <td>Average distance from center:</td>
+				    <td>{{ item.distanceAverage|number_format(0, '.', ',') }}</td>
+				    <td>Distance ranking:</td>
+				    <td>{{ item.distanceAverageRanking }}</td>
+				</tr>
+				<tr>
+				    <td>Best distance noticed:</td>
+				    <td>{{ item.distanceBest|number_format(0, '.', ',') }}</td>
+				    <td>Worst distance noticed:</td>
+				    <td>{{ item.distanceWorst|number_format(0, '.', ',') }}</td>
+				</tr>
+                {% if world.login == '' %}
+				<tr>
+				    <td>Bases:</td>
+				    <td>{{ item.membersBasesCount }}</td>
+				    <td> </td>
+				    <td> </td>
+				</tr>
+				{% else %}
+				<tr>
+				    <td>Bases:</td>
+				    <td>{{ item.membersBasesCount }}</td>
+				    <td>Bases destroyed:</td>
+				    <td>{{ item.basesDestroyedOverall|number_format(0, '.', ',') }}</td>
+				</tr>
+				<tr>
+				    <td>Bases destroyed PVP:</td>
+				    <td>{{ item.basesDestroyedPvp|number_format(0, '.', ',') }}</td>
+				    <td>Bases destroyed PVE:</td>
+				    <td>{{ item.basesDestroyedPve|number_format(0, '.', ',') }}</td>
+				</tr>
+				{% endif %}
+			    </table>
+			</div>
+
+			{% if item.externalId != 0 %}
+			<div style="padding-top: 15px; text-align: center">
+			    <h3 class="headtext">Compare</h3>
+				<div style="width: 100%;">
+				    <input type="hidden" name="compareAllianceId" id="compareAllianceId" />
+				    <input type="text" name="compareAlliance" class="search_field" id="compareAlliance" style="margin-top: 7px;" />
+				    <input type="button" value="Compare alliances" id="compareAlliances" class="search_button" />
+				</div>
+				<div style="clear: both"></div>
+			</div>
+
+			<div style="padding-top: 15px; text-align: center">
+			    {% include 'HwsCncstatsBundle:adverts:alliance_profile.html.twig' %}
+			</div>
+
+			<div style="padding-top: 15px; text-align: center">
+			    <h3 class="headtext">Detailed data</h3>
+			    <a href="{{ url('allianceMembers_world_externalId_date', {'world': world.externalId, 'externalId': item.externalId, 'date': selectedDate}) }}">alliance members</a><br />
+			    <a href="{{ url('allianceScore_world_type_externalId_dateFrom', {'world': world.externalId, 'externalId': item.externalId, 'dateFrom': selectedDate}) }}">ranking and score charts</a><br />
+			    <a href="{{ url('allianceBases_world_type_externalId_dateFrom', {'world': world.externalId, 'externalId': item.externalId, 'dateFrom': selectedDate}) }}">destroyed and members bases</a>
+			</div>
+			{% endif %}
+
+            {% if item.pois is defined %}
+			<div style="padding-top: 15px;">
+			    <h3 class="headtext">Points of interest</h3>
+			    <div style="text-align: center"><a href="{{ url('alliance_chart_poi', {'world': world.externalId, 'externalId': item.getExternalId()}) }}">view charts</a></div><br />
+			    <table width="90%" style="margin-left: auto; margin-right: auto;">
+				<tr>
+				    <td width="20%"><img src="{{ pois[1].getImage() }}" /></td>
+				    <td width="30%"><strong>{{ pois[1].getName() }}</strong><br />Taken points: {{ item.getPois2() }}<br />% of all taken: {{ '%.2f' | format(item.getPois2() / world.pois2 * 100) }}</td>
+				    <td width="20%"><img src="{{ pois[2].getImage() }}" /></td>
+				    <td width="30%"><strong>{{ pois[2].getName() }}</strong><br />Taken points: {{ item.getPois3() }}<br />% of all taken: {{ '%.2f' | format(item.getPois3() / world.pois3 * 100) }}</td>
+				</tr>
+				<tr>
+				    <td><img src="{{ pois[3].getImage() }}" /></td>
+				    <td><strong>{{ pois[3].getName() }}</strong><br />Taken points: {{ item.getPois4() }}<br />% of all taken: {{ '%.2f' | format(item.getPois4() / world.pois4 * 100) }}</td>
+				    <td><img src="{{ pois[4].getImage() }}" /></td>
+				    <td><strong>{{ pois[4].getName() }}</strong><br />Taken points: {{ item.getPois5() }}<br />% of all taken: {{ '%.2f' | format(item.getPois5() / world.pois5 * 100) }}</td>
+				</tr>
+				<tr>
+				    <td><img src="{{ pois[5].getImage() }}" /></td>
+				    <td><strong>{{ pois[5].getName() }}</strong><br />Taken points: {{ item.getPois6() }}<br />% of all taken: {{ '%.2f' | format(item.getPois6() / world.pois6 * 100) }}</td>
+				    <td><img src="{{ pois[6].getImage() }}" /></td>
+				    <td><strong>{{ pois[6].getName() }}</strong><br />Taken points: {{ item.getPois7() }}<br />% of all taken: {{ '%.2f' | format(item.getPois7() / world.pois7 * 100) }}</td>
+				</tr>
+				<tr>
+				    <td><img src="{{ pois[7].getImage() }}" /></td>
+				    <td><strong>{{ pois[7].getName() }}</strong><br />Taken points: {{ item.getPois8() }}<br />% of all taken: {{ '%.2f' | format(item.getPois8() / world.pois8 * 100) }}</td>
+				    <td>&nbsp;</td>
+				    <td>&nbsp;</td>
+				</tr>
+			    </table>
+			</div>
+            {% endif %}
+
+            {#
+			{% if nameChanges != false %}
+			<div style="padding-top: 15px; text-align: center">
+			    <h3 class="headtext">Name changes</h3>
+			    <table width="80%" style="margin-left: auto; margin-right: auto;">
+				<tr>
+				    <td width="20%">Date</td>
+				    <td width="40%">Old name</td>
+				    <td width="40%">New name</td>
+				</tr>
+				{% for item in nameChanges %}
+				<tr>
+				    <td>{% if item.date.date > 0 %}{{ item.date|date('Y-m-d') }}{% endif %}</td>
+				    <td>{% if item.oldName == '' %}-{% else %}{{ item.oldName }} (<small>{{ item.oldNameShort }}</small>){% endif %}</td>
+				    <td>{{ item.newName }} (<small>{{ item.newNameShort }}</small>)</td>
+				</tr>
+				{% endfor %}
+			    </table>
+			</div>
+			{% endif %}#}
+		</div>
+
+		<input type="hidden" value="{{ item.externalId }}" id="allianceId" />
+		<input type="hidden" value="{{ item.name }}" id="allianceName" />
+		<input type="hidden" value="{{ world.externalId }}" id="worldId" />
+{% endblock %}
+{% block javascripts %}
+<script src="/bundles/hwscncstats/js/compareLib.js"></script>
+<script src="/bundles/hwscncstats/js/alliance.js"></script>
+{% endblock %}

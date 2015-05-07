@@ -1,0 +1,14 @@
+{% extends '::base.html.twig' %}
+{% block title %}{{ firstBasic.name }} VS {{ secondBasic.name }} on {{ world.name }} - {% endblock %}
+{% block body %}
+		<div id="content-full">
+			<div id="box1">
+			<h2 class="title">{{ firstBasic.name }} VS {{ secondBasic.name }} on {{ world.name }}</h2>
+                <div style="text-align: right">Situation on {{ selectedDate }}</div>
+			</div>
+
+            <div style="width: 100%; text-align: center; color: red">
+                No results found, please select another date.
+            </div>
+        </div>
+{% endblock %}

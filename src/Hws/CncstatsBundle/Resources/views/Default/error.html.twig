@@ -1,0 +1,19 @@
+{% extends '::base.html.twig' %}
+{% block body %}
+		<div id="content-full">
+			<div id="box1">
+                <!--<h2 class="title">Migration in progress!</h2>
+				<p>Due to problems with our current server provider we're migrating again.<br />
+				Migration process should be completed before 24.03</p>-->
+
+				<h2 class="title">Error occured!</h2>
+				<p>An error occured and selected page cannot be displayed.<br />
+				Administration is already notified about that and will try to fix it as soon as possible.</p>
+
+				<p style="padding-top: 15px">
+				    <a href="{{ backUrl }}">Click here to go back to previous subpage</a>
+				</p>
+			</div>
+
+		</div>
+{% endblock %}

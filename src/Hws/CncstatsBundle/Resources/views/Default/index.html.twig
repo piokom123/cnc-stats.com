@@ -1,0 +1,50 @@
+{% extends '::main.html.twig' %}
+{% block body %}
+		<div id="content-full">
+			<div id="box1">
+				<h2 class="title"><a>Welcome to C&C Tiberium Alliances statistics website</a></h2>
+				<p>You can find here historical data about players and alliances from <a href="https://www.tiberiumalliances.com/">Tiberium Alliances</a> game.</p>
+				<p>To view statistics, select one of supported worlds listed below.</p><br /><br />
+                                Currently we're supporting <strong>{{ sums.0.worlds }}</strong> worlds with <strong>{{ sums.0.players|number_format(0, '.', ',') }}</strong> players and <strong>{{ sums.0.alliances|number_format(0, '.', ',') }}</strong> alliances!
+			</div>
+		</div>
+
+		<div class="content-full">
+		    <select class="select-style" style="margin-left: 5px" id="worldsLanguage">
+			<option value="" selected="selected">All languages</option>
+			<option value="EN">English</option>
+			<option value="PL">Polski</option>
+			<option value="DE">Deutch</option>
+			<option value="FR">Français</option>
+		    </select><br />
+		    <div class="tileContainer">
+			{% if worlds != false %}
+				{% for w in worlds %}
+			<a href="{{ url('world_id', {'world': w.externalId}) }}">
+			    <div class="tile tileLarge tile{{ w.languageCode }}">
+				<div class="tileTitle">{{ w.name|replace({'(': "<br />("})|raw }}</div>
+				<div class="tileInfo">Active players: {{ w.players - w.playersInactive3 }}</div>
+			    </div>
+			</a>
+				{% endfor %}
+			    {% endif %}
+		    </div>
+		</div>
+
+		<div class="content-full">
+		    <h2><a>What's new?</a></h2>
+		    <ul class="style3">
+			{% if newses != false %}
+			    {% for news in newses %}
+			<li class="first">
+			    <p class="date">{% if news.getDate().date > 0 %}{{ news.getDate()|date('Y-m-d') }}{% endif %}</p>
+			    <p>{{ news.getContent() }}</p>
+			</li>
+			    {% endfor %}
+			{% endif %}
+		    </ul>
+		</div>
+{% endblock %}
+{% block javascripts %}
+<script src="/bundles/hwscncstats/js/main.js"></script>
+{% endblock %}

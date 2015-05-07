@@ -1,0 +1,72 @@
+{% extends '::base.html.twig' %}
+{% block title %}Dynamic forum signatures from {{ world.name }} - {% endblock %}
+{% block keywords %}dynamic forum signature, player signature, alliance signature, signature, forum, {% endblock %}
+{% block description %}C&amp;C Tiberium Alliances dynamic statistics forum signatures from {{ world.name }}{% endblock %}
+{% block body %}
+		<div id="content-full">
+			<div id="box1">
+				<h2 class="title">Dynamic forum signatures</h2>
+			</div>
+
+			<div style="width: 100%; text-align: center; padding: 25px">
+			    To add your custom signature just follow this simple steps.
+			</div>
+			<div style="width: 100%; text-align: center; padding: 25px">
+			    <input type="button" value="1. Select custom signature" class="search_button signatureUploadSelectButton" />
+			    <input type="button" value="2. Upload selected image" class="search_button_disabled signatureUploadSubmitButton" disabled="disabled" />
+			</div>
+
+			<div class="signatureSteps" id="signatureStep1">
+			    <div style="width: 100%; text-align: center">
+				<input type="button" value="Click here to select image" class="search_button signatureUploadSelectButton" />
+				<div id="signatureUploadFilePreview" style="display: none; padding-top: 25px; padding-bottom: 25px">
+				    <img />
+				    <div>
+					If you like that image, select signature type and click below to upload it and go to next step.<br />
+					You can also select another image if you want to.<br /><br />
+
+					<form method="post" action="{{ url('signature_upload', {'world': world.externalId}) }}" id="signatureUploadForm">
+					    <input type="file" name="signatureFile" style="opacity: 0; position: absolute; top: 0px; left: 0px" id="signatureUploadInput" />
+					    <select name="signatureUploadType" class="select-style">
+						<option value="1">Player signature</option>
+						<option value="2">Alliance signature</option>
+					    </select><br /><br />
+					</form>
+					<input type="button" value="Upload this image" class="search_button signatureUploadSubmitButton" />
+				    </div>
+				</div>
+				<div id="signatureUploadProgress">
+				    <div id="signatureUploadFile"></div >
+				    <div id="signatureUploadBar"></div >
+				    <div id="signatureUploadPercent"></div >
+				</div>
+
+				<div id="signatureUploadStatus"></div>
+
+			    </div>
+			</div>
+			<div class="signatureSteps" id="signatureStep2">
+			    <div style="width: 100%; text-align: center; padding-bottom: 25px">
+				Your image is uploaded, now it's time to select what you want to show on it.<br />
+				Grab selected data box and place it on image preview. You can use all boxes, few or just one.<br />
+				You can't edit signature after saving it, so put boxes in good places.
+			    </div>
+			    <div id="signatureUploadedFileBoxes">
+				<span>test</span>
+				<span>test2</span>
+				<span>test3</span>
+			    </div>
+			    <div id="signatureUploadedFilePreview" style="width: 100%; text-align: center; padding-bottom: 25px">
+				<img />
+			    </div>
+			</div>
+			<div class="signatureSteps" id="signatureStep3">
+
+			</div>
+		</div>
+{% endblock %}
+{% block javascripts %}
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
+<script src="/bundles/hwscncstats/js/external/jquery.form.js"></script>
+<script src="/bundles/hwscncstats/js/signature.js"></script>
+{% endblock %}

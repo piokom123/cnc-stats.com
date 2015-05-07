@@ -1,0 +1,51 @@
+{% extends '::base.html.twig' %}
+{% block title %}Player {{ item.getName() }} rankings on {{ world.name }} - {% endblock %}
+{% block keywords %}player {{ item.getName() }} rankings, player {{ item.getName() }} score, {{ item.getName() }}, rankings, rankings history, {% endblock %}
+{% block description %}C&amp;C Tiberium Alliances {{ item.getName() }} player rankings history{% endblock %}
+{% block body %}
+		<div id="content-full">
+			<div id="box1">
+				<h2 class="title">Player {{ item.getName() }} rankings on {{ world.name }}</h2>
+			</div>
+                        {% if rankingsTypes|length > 0 %}
+                        <div>
+                                <h4>Global rankings</h4>
+                        </div>
+			<div>
+                                {% for rankingsType in rankingsTypes %}
+                                <div>
+                                    <h5>{{ rankingsType.name }}</h5>
+                                    {% if globalRankings[rankingsType.id] is defined %}
+                                        {% for globalRanking in globalRankings[rankingsType.id] %}
+                                            Place <b>{{ globalRanking.ranking }}</b> - {{ globalRanking.count }} time{% if globalRanking.count > 1 %}s{% endif %}<br />
+                                        {% endfor %}
+                                    {% else %}
+                                    <span>Nothing yet.</span>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+			</div>
+                        <div style="padding-top: 30px">
+                                <h4>{{ world.name }} rankings</h4>
+                        </div>
+			<div>
+                                {% for rankingsType in rankingsTypes %}
+                                <div>
+                                    <h5>{{ rankingsType.name }}</h5>
+                                    {% if worldRankings[rankingsType.id] is defined %}
+                                        {% for worldRanking in worldRankings[rankingsType.id] %}
+                                            Place <b>{{ worldRanking.ranking }}</b> - {{ worldRanking.count }} time{% if worldRanking.count > 1 %}s{% endif %}<br />
+                                        {% endfor %}
+                                    {% else %}
+                                    <span>Nothing yet.</span>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+			</div>
+                        {% else %}
+                        <div style="width: 100%; text-align: center; color: red">
+                            Currently there are no active rankings.
+                        </div>
+                        {% endif %}
+		</div>
+{% endblock %}

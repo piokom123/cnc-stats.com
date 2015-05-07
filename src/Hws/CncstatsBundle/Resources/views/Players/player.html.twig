@@ -1,0 +1,158 @@
+{% extends '::base.html.twig' %}
+{% block title %}Player {{ player.name }} on {{ world.name }} - {% endblock %}
+{% block keywords %}player {{ player.name }} statistics, player {{ player.name }} score, {{ player.name }}, {% endblock %}
+{% block description %}C&amp;C Tiberium Alliances {{ player.name }} player detailed statistics{% endblock %}
+{% block body %}
+		<div id="content-full">
+			<div id="box1">
+				<h2 class="title">Player "{{ player.name }}" on {{ world.name }}</h2>
+				<div style="text-align: center"><a href="{{ url('players_world_type_date', {'world': world.externalId, 'date': selectedDate}) }}">go back to list</a></div>
+                <div style="text-align: right">Situation on {{ selectedDate }}</div>
+			</div>
+			{% if world.login == '' %}
+			<div class="message_red">We're sorry but we can't show PvP/PvE data and bases scores from this world!</div>
+			{% endif %}
+			<div>
+			    <h3 class="headtext">Basic informations</h3>
+			    <table width="70%" style="margin-left: auto; margin-right: auto;">
+				<tr>
+				    <td width="30%">Name:</td>
+				    <td width="18%">{{ player.name }}</td>
+				    <td width="30%">Alliance:</td>
+				    <td width="22%">{% if item.allianceId != '' %}<a href="{{ url('alliance_world_externalId_date', {'world': world.externalId, 'externalId': item.allianceId, 'date': selectedDate}) }}">{{ alliance.name }}</a>{% else %}-{% endif %}</td>
+				</tr>
+				<tr>
+				    <td>Score:</td>
+				    <td>{{ item.scoreOverall|number_format(0, '.', ',') }}</td>
+				    <td>Ranking:</td>
+				    <td>{{ item.scoreRanking|number_format(0, '.', ',') }}</td>
+				</tr>
+				<tr>
+				    <td>Distance from center:</td>
+				    <td>{{ item.distanceCurrent|number_format(0, '.', ',') }}</td>
+				    <td>Distance ranking:</td>
+				    <td>{{ item.distanceRanking|number_format(0, '.', ',') }}</td>
+				</tr>
+				<tr>
+				    <td>Best distance noticed:</td>
+				    <td>{{ player.distanceBest|number_format(0, '.', ',') }}</td>
+				    <td>Worst distance noticed:</td>
+				    <td>{{ player.distanceWorst|number_format(0, '.', ',') }}</td>
+				</tr>
+				{% if world.login == '' %}
+				<tr>
+				    <td>Bases:</td>
+				    <td>{{ item.basesCount }}</td>
+				    <td> </td>
+				    <td> </td>
+				</tr>
+				{% else %}
+				<tr>
+				    <td>Bases:</td>
+				    <td>{{ item.basesCount }}</td>
+				    <td>Bases destroyed:</td>
+				    <td>{{ item.basesDestroyedOverall|number_format(0, '.', ',') }}</td>
+				</tr>
+				<tr>
+				    <td>Bases destroyed PVP:</td>
+				    <td>{{ item.basesDestroyedPvp|number_format(0, '.', ',') }}</td>
+				    <td>Bases destroyed PVE:</td>
+				    <td>{{ item.basesDestroyedPve|number_format(0, '.', ',') }}</td>
+				</tr>
+				{% endif %}
+			    </table>
+			</div>
+
+			<div style="padding-top: 15px; text-align: center">
+			    <h3 class="headtext">Compare</h3>
+				<div style="{% if item.allianceId != '' %}float: left; width: 45%{% else %}{% endif %}">
+				    <input type="hidden" name="comparePlayerId" id="comparePlayerId" />
+				    <input type="text" name="comparePlayer" class="search_field" id="comparePlayer" style="margin-top: 7px;" />
+				    <input type="button" value="Compare players" id="comparePlayers" class="search_button" />
+				</div>
+				{% if item.allianceId != '' %}
+				<div style="float: right; width: 46%;">
+				    <input type="hidden" name="compareAllianceId" id="compareAllianceId" />
+				    <input type="text" name="compareAlliance" class="search_field" id="compareAlliance" style="margin-top: 7px;" />
+				    <input type="button" value="Compare alliances" id="compareAlliances" class="search_button" />
+				</div>
+				{% endif %}
+				<div style="clear: both"></div>
+			</div>
+
+			{#<div style="padding-top: 15px; text-align: center">
+			    <h3 class="headtext">Player activity</h3>
+			     <div id="userActivityBarContainer" class="progressbar">
+				<div id="userActivityBar" style="{{ getBarCss(item.getInactiveDays()) }}"></div>
+				<div class="progressbar_text" style="color: {% if item.getInactiveDays() > 14 %}black{% else %}blue{% endif %}">{{ getBarText(item.getInactiveDays()) }}</div>
+			    </div>
+			    <table width="70%" style="margin-left: auto; margin-right: auto;">
+				<tr>
+				    <td width="40%">Maximum inactivity days in a row:</td>
+				    <td width="60%">{{ floor(item.getInactiveMax()) }}</td>
+				</tr>
+			    </table>
+			</div>#}
+
+			<div style="padding-top: 15px; text-align: center">
+			    {% include 'HwsCncstatsBundle:adverts:player_profile.html.twig' %}
+			</div>
+
+			<div style="padding-top: 15px; text-align: center">
+			    <h3 class="headtext">Detailed data</h3>
+			    <a href="{{ url('playerScore_world_externalId_dateFrom', {'world': world.externalId, 'externalId': item.externalId, 'dateFrom': selectedDate }) }}">ranking and score charts</a><br />
+			    <a href="{{ url('playerBases_world_externalId_dateFrom', {'world': world.externalId, 'externalId': item.externalId, 'dateFrom': selectedDate }) }}">destroyed bases</a><br />
+                {#<a href="{{ url('player_rankings', {'world': world.externalId, 'externalId': item.externalId }) }}">successes in rankings</a>#}
+			</div>
+
+            <div style="padding-top: 15px; text-align: center">
+			    <h3 class="headtext">Bases</h3>
+			    <table width="70%" style="margin-left: auto; margin-right: auto;">
+				<tr>
+				    <td width="15%">Creation date</td>
+				    <td width="30%">Name</td>
+				    <td width="18%">Score</td>
+				    <td width="15%">Coords</td>
+				</tr>
+				{% for base in basesHistory %}
+				<tr>
+                    <td>{{ attribute(bases, base.externalId).creationDate }}</td>
+				    <td><a href="{{ url('base_world_externalId_date', {'world': world.externalId, 'externalId': base.externalId, 'date': selectedDate}) }}">{{ attribute(bases, base.externalId).name }}</a></td>
+				    <td>{{ base.score|number_format(0, '.', ',') }}</td>
+				    <td><a target="_blank" rel="nofollow" href="{{ map_service.getLink(world.externalId, base.externalId, base.x ~ ':' ~ base.y) }}">{{ base.x ~ ':' ~ base.y }}</a></td>
+				</tr>
+				{% endfor %}
+			    </table>
+			</div>
+
+
+			{% if alliancesChanges != false %}
+			<div style="padding-top: 15px; text-align: center">
+			    <h3 class="headtext">Alliances changes</h3>
+			    <table width="80%" style="margin-left: auto; margin-right: auto;">
+				<tr>
+				    <td width="20%">Date</td>
+				    <td width="40%">Old alliance</td>
+				    <td width="40%">New alliance</td>
+				</tr>
+				{% for subItem in alliancesChanges %}
+				<tr>
+				    <td>{{ subItem.date }}</td>
+				    <td><a href="{{ url('alliance_world_externalId_date', {'world': world.externalId, 'externalId': subItem.oldAid, 'date': selectedDate}) }}">{{ subItem.oldName }}</a></td>
+				    <td><a href="{{ url('alliance_world_externalId_date', {'world': world.externalId, 'externalId': subItem.newAid, 'date': selectedDate}) }}">{{ subItem.newName }}</a></td>
+				</tr>
+				{% endfor %}
+			    </table>
+			</div>
+			{% endif %}
+		</div>
+		<input type="hidden" value="{{ world.externalId }}" id="worldId" />
+		<input type="hidden" value="{{ item.externalId }}" id="playerId" />
+		<input type="hidden" value="{{ player.name }}" id="playerName" />
+		<input type="hidden" value="{% if item.allianceId != '' %}{{ item.allianceId }}{% else %}0{% endif %}" id="allianceId" />
+		<input type="hidden" value="{% if item.allianceId != '' %}{{ alliance.name }}{% else %}{% endif %}" id="allianceName" />
+{% endblock %}
+{% block javascripts %}
+<script src="/bundles/hwscncstats/js/compareLib.js"></script>
+<script src="/bundles/hwscncstats/js/player.js"></script>
+{% endblock %}

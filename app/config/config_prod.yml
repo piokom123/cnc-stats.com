@@ -1,0 +1,35 @@
+imports:
+    - { resource: config.yml }
+
+#doctrine:
+#    orm:
+#        metadata_cache_driver: apc
+#        result_cache_driver: apc
+#        query_cache_driver: apc
+
+monolog:
+    handlers:
+        main:
+            type:         fingers_crossed
+            action_level: error
+            handler:      nested
+        nested:
+            type:  stream
+            path:  "%kernel.logs_dir%/%kernel.environment%.log"
+            level: debug
+
+            
+lsw_memcache:
+    doctrine:
+        result_cache:
+            client: default
+            entity_manager: [default, worlds]  # you may specify multiple entity_managers
+            prefix: "result_"                # you may specify a prefix for the entries
+        query_cache:
+            client: default
+            entity_manager: [default, worlds]
+            prefix: "query_"
+        metadata_cache:
+            client: default
+            entity_manager: [default, worlds]   
+            document_manager: default

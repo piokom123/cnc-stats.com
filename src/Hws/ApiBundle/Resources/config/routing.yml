@@ -1,0 +1,7 @@
+hws_api_player:
+    pattern:  /world/{world}/player/{externalId}
+    defaults: { _controller: HwsApiBundle:Player:get }
+    requirements:
+      world: \d+
+      externalId: \d+
+      _method: GET

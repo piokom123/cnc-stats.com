@@ -1,0 +1,98 @@
+{% extends '::base.html.twig' %}
+{% block title %}{{ firstBasic.name }} VS {{ secondBasic.name }} on {{ world.name }} on {{ selectedDate }} - {% endblock %}
+{% block body %}
+		<div id="content-full">
+		    <div id="box1">
+			<h2 class="title">{{ firstBasic.name }} VS {{ secondBasic.name }} on {{ world.name }}</h2>
+			<div style="text-align: center"><a href="{{ url('player_world_externalId_date', {'world': world.externalId, 'externalId': firstBasic.externalId, 'date': selectedDate}) }}">show {{ firstBasic.name }} statistics</a></div>
+			<div style="text-align: center"><a href="{{ url('player_world_externalId_date', {'world': world.externalId, 'externalId': secondBasic.externalId, 'date': selectedDate}) }}">show {{ secondBasic.name }} statistics</a></div>
+			<br />
+			<div style="text-align: center"><a href="{{ url('comparePlayersCharts_world_firstId_secondId_slug_dateFrom', {'world': world.externalId, 'firstId': firstBasic.externalId, 'secondId': secondBasic.externalId, 'slug': slug, 'dateFrom': selectedDate}) }}"><strong>show comparison charts</strong></a></div>
+		    </div>
+
+		    {% if world.login == '' %}
+		    <div class="message_red">We're sorry but we can't show PvP/PvE data from this world!</div>
+		    {% endif %}
+
+		    <div>
+			<h3 class="headtext">Basic informations</h3>
+			<table width="70%" style="margin-left: auto; margin-right: auto;">
+			    <tr>
+				<td width="40%" class="compareLeft">{{ firstBasic.name }}</td>
+				<td width="20%" class="compareMiddle">name</td>
+				<td width="40%" class="compareRight">{{ secondBasic.name }}</td>
+			    </tr>
+			    <tr>
+				<td class="compareLeft"><a href="{{ url('alliance_world_externalId_date', {'world': world.externalId, 'externalId': firstItem.allianceId, 'date': selectedDate}) }}">{{ attribute(alliances, firstItem.allianceId).name }}</a></td>
+				<td class="compareMiddle">alliance</td>
+				<td class="compareRight"><a href="{{ url('alliance_world_externalId_date', {'world': world.externalId, 'externalId': secondItem.allianceId, 'date': selectedDate}) }}">{{ attribute(alliances, secondItem.allianceId).name }}</a></td>
+			    </tr>
+			</table>
+		    </div>
+
+		    <div>
+			<h3 class="headtext">Score and members</h3>
+			<table width="70%" style="margin-left: auto; margin-right: auto;">
+			    <tr>
+				<td width="30%" class="compareLeft">{{ firstItem.scoreRanking }}</td>
+				<td width="10%" class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.scoreRanking <= secondItem.scoreRanking %}{% set firstScore = firstScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td width="20%" class="compareMiddle">ranking</td>
+				<td width="10%" class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.scoreRanking >= secondItem.scoreRanking %}{% set secondScore = secondScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td width="30%" class="compareRight">{{ secondItem.scoreRanking }}</td>
+			    </tr>
+			    <tr>
+				<td class="compareLeft">{{ firstItem.basesCount|number_format(0, '.', ',') }}</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.basesCount >= secondItem.basesCount %}{% set firstScore = firstScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareMiddle">bases</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.basesCount <= secondItem.basesCount %}{% set secondScore = secondScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareRight">{{ secondItem.basesCount|number_format(0, '.', ',') }}</td>
+			    </tr>
+			    <tr>
+				<td class="compareLeft">{{ firstItem.scoreOverall|number_format(0, '.', ',') }}</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.scoreOverall >= secondItem.scoreOverall %}{% set firstScore = firstScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareMiddle">total score</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.scoreOverall <= secondItem.scoreOverall %}{% set secondScore = secondScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareRight">{{ secondItem.scoreOverall|number_format(0, '.', ',') }}</td>
+			    </tr>
+			</table>
+		    </div>
+
+		    {% if world.login != '' %}
+		    <div>
+			<h3 class="headtext">Destroyed bases</h3>
+			<table width="70%" style="margin-left: auto; margin-right: auto;">
+			    <tr>
+				<td width="30%" class="compareLeft">{{ firstItem.basesDestroyedOverall }}</td>
+				<td width="10%" class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.basesDestroyedOverall >= secondItem.basesDestroyedOverall %}{% set firstScore = firstScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td width="20%" class="compareMiddle">all destroyed bases</td>
+				<td width="10%" class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.basesDestroyedOverall <= secondItem.basesDestroyedOverall %}{% set secondScore = secondScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td width="30%" class="compareRight">{{ secondItem.basesDestroyedOverall }}</td>
+			    </tr>
+			    <tr>
+				<td class="compareLeft">{{ firstItem.basesDestroyedPvp }}</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.basesDestroyedPvp >= secondItem.basesDestroyedPvp %}{% set firstScore = firstScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareMiddle">destroyed bases (PVP)</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.basesDestroyedPvp <= secondItem.basesDestroyedPvp %}{% set secondScore = secondScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareRight">{{ secondItem.basesDestroyedPvp }}</td>
+			    </tr>
+			    <tr>
+				<td class="compareLeft">{{ firstItem.basesDestroyedPve }}</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.basesDestroyedPve >= secondItem.basesDestroyedPve %}{% set firstScore = firstScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareMiddle">destroyed bases (PVE)</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.basesDestroyedPve <= secondItem.basesDestroyedPve %}{% set secondScore = secondScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareRight">{{ secondItem.basesDestroyedPve }}</td>
+			    </tr>
+			</table>
+		    </div>
+		    {% endif %}
+
+		    <div style="text-align: center">
+			<h3 class="headtext">Result</h3>
+			Player {{ firstBasic.name }} points: <b>{{ firstScore }}</b><br />
+			Player {{ secondBasic.name }} points: <b>{{ secondScore }}</b><br /><br />
+			<big>{% if firstScore == secondScore %}Both players gained same amount of points!{% elseif firstScore > secondScore %}{{ firstBasic.name }} won!{% else %}{{ secondBasic.name }} won!{% endif %}
+		    </div>
+
+                    {% include 'HwsCncstatsBundle:facebook:comments.html.twig' %}
+		</div>
+{% endblock %}

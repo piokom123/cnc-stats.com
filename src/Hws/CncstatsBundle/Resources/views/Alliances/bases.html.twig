@@ -1,0 +1,70 @@
+{% extends '::base.html.twig' %}
+{% block title %}Alliance {{ alliance.name }} destroyed bases on {{ world.name }} on {{ selectedDate }} - {% endblock %}
+{% block body %}
+		<div id="content-full">
+			<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+			<script type="text/javascript">
+			    google.load("visualization", "1", {packages:["corechart", 'table', 'treemap', 'gauge']});
+			    google.load('jquery', '1.6.0');
+			</script>
+			<div id="box1">
+				<h2 class="title">{{ alliance.name }} bases on {{ selectedDate }}</h2>
+				<div style="text-align: center"><a href="{{ url('alliance_world_externalId_date', {'world': world.externalId, 'externalId': alliance.externalId, 'date': selectedDate}) }}">go back to statistics</a></div>
+			</div>
+
+            {% if chart1 == null %}
+            <div style="width: 100%; text-align: center; color: red">
+                {% if selectedDate == date()|date('Y-m-d') %}
+                There is no data for this date yet. Please check again after few hours.
+                {% else %}
+                No results found. Probably this alliance was created after selected date.
+                {% endif %}
+            </div>
+            {% else %}
+			<div style="padding-top: 30px">
+			    <div id="chart1" class="chart_div_members"></div>
+			    <script>
+			    $(function() {
+			    {{ gchart_column_chart(chart1, 'chart1', 700, 400, 'All destroyed bases', {'hAxis': {'slantedText': true}}) }}
+			    });
+			    </script>
+			</div>
+
+			<div style="padding-top: 30px">
+			    <div id="chart2" class="chart_div_members"></div>
+			    <script>
+			    $(function() {
+			    {{ gchart_column_chart(chart2, 'chart2', 700, 400, 'Destroyed bases (PVP)', {'hAxis': {'slantedText': true}}) }}
+			    });
+			    </script>
+			</div>
+
+			<div style="padding-top: 30px">
+			    <div id="chart3" class="chart_div_members"></div>
+			    <script>
+			    $(function() {
+			    {{ gchart_column_chart(chart3, 'chart3', 700, 400, 'Destroyed bases (PVE)', {'hAxis': {'slantedText': true}}) }}
+			    });
+			    </script>
+			</div>
+
+            <div style="padding-top: 30px">
+			    <div id="chart4" class="chart_div_members"></div>
+			    <script>
+			    $(function() {
+			    {{ gchart_column_chart(chart4, 'chart4', 700, 400, 'Members changes', {'hAxis': {'slantedText': true}}) }}
+			    });
+			    </script>
+			</div>
+
+			<div style="padding-top: 30px">
+			    <div id="chart5" class="chart_div_members"></div>
+			    <script>
+			    $(function() {
+			    {{ gchart_column_chart(chart5, 'chart5', 700, 400, 'Members bases', {'hAxis': {'slantedText': true}}) }}
+			    });
+			    </script>
+			</div>
+            {% endif %}
+		</div>
+{% endblock %}

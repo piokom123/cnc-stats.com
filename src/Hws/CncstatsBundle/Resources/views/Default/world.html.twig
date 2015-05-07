@@ -1,0 +1,95 @@
+{% extends '::base.html.twig' %}
+{% block title %}{{ item.name }} - {% endblock %}
+{% block keywords %}{{ item.name }} players, {{ item.name }} alliances, {{ item.name }}, {% endblock %}
+{% block description %}C&amp;C Tiberium Alliances {{ item.name }} alliances, players and bases statistics{% endblock %}
+{% block body %}
+		<div id="content-full">
+			<div id="box1">
+				<h2 class="title"><a>{{ item.name }}</a></h2>
+
+				<p>There are <b>{{ item.players }} active players</b> with <b>{{ item.bases }} bases</b> affiliated in <b>{{ item.alliances }} alliances</b>.</p>
+
+				<div style="padding-top: 25px">
+					<h3 class="title"><a>Top 5 alliances</a></h2>
+					<table width="100%">
+						<tr>
+							<td>Ranking</td>
+							<td>Name</td>
+							<td>Top 40 score</td>
+							<td>Total score</td>
+							<td>Members</td>
+							<td>Average score</td>
+							<td>Bases</td>
+						</tr>
+						{% for item in alliances %}
+						<tr style="padding: 5px">
+							<td>{{ item.scoreRanking }}</td>
+							<td><a href="{{ url('alliance_world_externalId', {'world': world.externalId, 'externalId': item.externalId}) }}">{{ item.name }}</a></td>
+							<td>{{ item.scoreTop|number_format(0, '.', ',') }}</td>
+							<td>{{ item.scoreOverall|number_format(0, '.', ',') }}</td>
+							<td>{{ item.membersCount }}</td>
+							<td>{{ item.scoreAverage|number_format(0, '.', ',') }}</td>
+							<td>{{ item.membersBasesCount }}</td>
+						</tr>
+						{% endfor %}
+					</table>
+				</div>
+
+				<div style="padding-top: 25px">
+					<h3 class="title"><a>Top 5 players</a></h2>
+					<table width="100%">
+						<tr>
+							<td>Ranking</td>
+							<td>Name</td>
+							{#<td>Alliance</td>#}
+							<td>Score</td>
+							<td>Bases</td>
+							<td>Distance from center</td>
+							<td>Distance ranking</td>
+						</tr>
+					    {% for item in players %}
+					    <tr style="padding: 5px">
+						<td>{{ item.scoreRanking }}</td>
+						<td><a href="{{ url('player_world_externalId', {'world': world.externalId, 'externalId': item.externalId}) }}">{{ attribute(playersBasic, item.externalId).name }}</a></td>
+						{#<td>{% if item.0.allianceId != '' %}<a href="{{ url('alliance_world_externalId', {'world': world.externalId, 'externalId': item.allianceId}) }}">{{ item.allianceName }}</a>{% else %}-{% endif %}</td>#}
+						<td>{{ item.scoreOverall|number_format(0, '.', ',') }}</td>
+						<td>{{ item.basesCount }}</td>
+						<td>{{ item.distanceCurrent }}</td>
+						<td>{{ item.distanceRanking }}</td>
+					    </tr>
+					    {% endfor %}
+					</table>
+				</div>
+
+				{#{% if world.login != '' %}
+				<div style="padding-top: 25px">
+					<h3 class="title"><a>Top 5 bases</a></h2>
+					<table width="100%">
+						<tr>
+							<td>Ranking</td>
+							<td>Name</td>
+							<td>Player</td>
+							<td>Alliance</td>
+							<td>Score</td>
+							<td>Distance from center</td>
+							<td>Distance ranking</td>
+						</tr>
+					    {% for item in bases %}
+						{% if item.0.name != '' %}
+					    <tr style="padding: 5px">
+						<td>{{ item.0.ranking }}</td>
+						<td><a href="{{ url('base', {'world': world.externalId, 'externalId': item.0.externalId}) }}">{{ item.0.name }}</a></td>
+						<td><a href="{{ url('player', {'world': world.externalId, 'externalId': item.playerExternalId}) }}">{{ item.playerName }}</a></td>
+						<td><a href="{{ url('alliance', {'world': world.externalId, 'externalId': item.allianceExternalId}) }}">{{ item.allianceName }}</a></td>
+						<td>{{ item.0.score|number_format(0, '.', ',') }}</td>
+						<td>{{ item.0.distance }}</td>
+						<td>{{ item.0.distanceRanking }}</td>
+					    </tr>
+						{% endif %}
+					    {% endfor %}
+					</table>
+				</div>
+				{% endif %}#}
+			</div>
+		</div>
+{% endblock %}

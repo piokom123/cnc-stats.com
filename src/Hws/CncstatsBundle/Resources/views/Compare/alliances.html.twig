@@ -1,0 +1,181 @@
+{% extends '::base.html.twig' %}
+{% block title %}{{ firstItem.name }} VS {{ secondItem.name }} on {{ world.name }} on {{ selectedDate }} - {% endblock %}
+{% block body %}
+		<div id="content-full">
+		    <div id="box1">
+			<h2 class="title">{{ firstItem.name }} VS {{ secondItem.name }} on {{ world.name }}</h2>
+			<div style="text-align: center"><a href="{{ url('alliance_world_externalId_date', {'world': world.externalId, 'externalId': firstItem.externalId, 'date': selectedDate}) }}">show {{ firstItem.name }} statistics</a></div>
+			<div style="text-align: center"><a href="{{ url('alliance_world_externalId_date', {'world': world.externalId, 'externalId': secondItem.externalId, 'date': selectedDate}) }}">show {{ secondItem.name }} statistics</a></div>
+			<br />
+			<div style="text-align: center"><a href="{{ url('compareAlliancesCharts_world_firstId_secondId_slug_dateFrom', {'world': world.externalId, 'firstId': firstItem.externalId, 'secondId': secondItem.externalId, 'slug': slug, 'dateFrom': selectedDate}) }}"><strong>show comparison charts</strong></a></div>
+		    </div>
+
+		    {% if world.login == '' %}
+		    <div class="message_red">We're sorry but we can't show PvP/PvE data from this world!</div>
+		    {% endif %}
+
+		    <div>
+			<h3 class="headtext">Basic informations</h3>
+			<table width="70%" style="margin-left: auto; margin-right: auto;">
+			    <tr>
+				<td width="40%" class="compareLeft">{{ firstItem.name }}</td>
+				<td width="20%" class="compareMiddle">name</td>
+				<td width="40%" class="compareRight">{{ secondItem.name }}</td>
+			    </tr>
+			    <tr>
+				<td class="compareLeft">{{ firstItem.nameShort }}</td>
+				<td class="compareMiddle">abbreviation</td>
+				<td class="compareRight">{{ secondItem.nameShort }}</td>
+			    </tr>
+			</table>
+		    </div>
+
+		    <div>
+			<h3 class="headtext">Score and members</h3>
+			<table width="70%" style="margin-left: auto; margin-right: auto;">
+			    <tr>
+				<td width="30%" class="compareLeft">{{ firstItem.scoreRanking }}</td>
+				<td width="10%" class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.scoreRanking <= secondItem.scoreRanking %}{% set firstScore = firstScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td width="20%" class="compareMiddle">ranking</td>
+				<td width="10%" class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.scoreRanking >= secondItem.scoreRanking %}{% set secondScore = secondScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td width="30%" class="compareRight">{{ secondItem.scoreRanking }}</td>
+			    </tr>
+			    <tr>
+				<td class="compareLeft">{{ firstItem.membersCount }}</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.membersCount >= secondItem.membersCount %}{% set firstScore = firstScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareMiddle">members</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.membersCount <= secondItem.membersCount %}{% set secondScore = secondScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareRight">{{ secondItem.membersCount }}</td>
+			    </tr>
+			    <tr>
+				<td class="compareLeft">{{ firstItem.membersBasesCount|number_format(0, '.', ',') }}</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.membersBasesCount >= secondItem.membersBasesCount %}{% set firstScore = firstScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareMiddle">bases</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.membersBasesCount <= secondItem.membersBasesCount %}{% set secondScore = secondScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareRight">{{ secondItem.membersBasesCount|number_format(0, '.', ',') }}</td>
+			    </tr>
+			    <tr>
+				<td class="compareLeft">{{ firstItem.scoreTop|number_format(0, '.', ',') }}</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.scoreTop >= secondItem.scoreTop %}{% set firstScore = firstScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareMiddle">top 40 score</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.scoreTop <= secondItem.scoreTop %}{% set secondScore = secondScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareRight">{{ secondItem.scoreTop|number_format(0, '.', ',') }}</td>
+			    </tr>
+			    <tr>
+				<td class="compareLeft">{{ firstItem.scoreOverall|number_format(0, '.', ',') }}</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.scoreOverall >= secondItem.scoreOverall %}{% set firstScore = firstScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareMiddle">total score</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.scoreOverall <= secondItem.scoreOverall %}{% set secondScore = secondScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareRight">{{ secondItem.scoreOverall|number_format(0, '.', ',') }}</td>
+			    </tr>
+			    <tr>
+				<td class="compareLeft">{{ firstItem.scoreAverage|number_format(0, '.', ',') }}</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.scoreAverage >= secondItem.scoreAverage %}{% set firstScore = firstScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareMiddle">average score</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.scoreAverage <= secondItem.scoreAverage %}{% set secondScore = secondScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareRight">{{ secondItem.scoreAverage|number_format(0, '.', ',') }}</td>
+			    </tr>
+			</table>
+		    </div>
+
+		    {% if world.login != '' %}
+		    <div>
+			<h3 class="headtext">Destroyed bases</h3>
+			<table width="70%" style="margin-left: auto; margin-right: auto;">
+			    <tr>
+				<td width="30%" class="compareLeft">{{ firstItem.basesDestroyedOverall }}</td>
+				<td width="10%" class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.basesDestroyedOverall >= secondItem.basesDestroyedOverall %}{% set firstScore = firstScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td width="20%" class="compareMiddle">all destroyed bases</td>
+				<td width="10%" class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.basesDestroyedOverall <= secondItem.basesDestroyedOverall %}{% set secondScore = secondScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td width="30%" class="compareRight">{{ secondItem.basesDestroyedOverall }}</td>
+			    </tr>
+			    <tr>
+				<td class="compareLeft">{{ firstItem.basesDestroyedPvp }}</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.basesDestroyedPvp >= secondItem.basesDestroyedPvp %}{% set firstScore = firstScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareMiddle">destroyed bases (PVP)</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.basesDestroyedPvp <= secondItem.basesDestroyedPvp %}{% set secondScore = secondScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareRight">{{ secondItem.basesDestroyedPvp }}</td>
+			    </tr>
+			    <tr>
+				<td class="compareLeft">{{ firstItem.basesDestroyedPve }}</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.basesDestroyedPve >= secondItem.basesDestroyedPve %}{% set firstScore = firstScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareMiddle">destroyed bases (PVE)</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.basesDestroyedPve <= secondItem.basesDestroyedPve %}{% set secondScore = secondScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareRight">{{ secondItem.basesDestroyedPve }}</td>
+			    </tr>
+			</table>
+		    </div>
+		    {% endif %}
+
+		    {#<div>
+			<h3 class="headtext">Controlled POI's points</h3>
+			<table width="70%" style="margin-left: auto; margin-right: auto;">
+			    <tr>
+				<td width="30%" class="compareLeft">{{ firstItem.getPoisPoints()|number_format(0, '.', ',') }}</td>
+				<td width="10%" class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.getPoisPoints() >= secondItem.getPoisPoints() %}{% set firstScore = firstScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td width="20%" class="compareMiddle">all POI's</td>
+				<td width="10%" class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.getPoisPoints() <= secondItem.getPoisPoints() %}{% set secondScore = secondScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td width="30%" class="compareRight">{{ secondItem.getPoisPoints()|number_format(0, '.', ',') }}</td>
+			    </tr>
+			    <tr>
+				<td class="compareLeft">{{ firstItem.getPois2Points()|number_format(0, '.', ',') }}</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.getPois2Points() >= secondItem.getPois2Points() %}{% set firstScore = firstScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareMiddle"><strong>{{ pois[1].getName() }}</strong><br /><img src="{{ pois[1].getImage() }}" /></td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.getPois2Points() <= secondItem.getPois2Points() %}{% set secondScore = secondScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareRight">{{ secondItem.getPois2Points()|number_format(0, '.', ',') }}</td>
+			    </tr>
+			    <tr>
+				<td class="compareLeft">{{ firstItem.getPois3Points()|number_format(0, '.', ',') }}</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.getPois3Points() >= secondItem.getPois3Points() %}{% set firstScore = firstScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareMiddle"><strong>{{ pois[2].getName() }}</strong><br /><img src="{{ pois[2].getImage() }}" /></td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.getPois3Points() <= secondItem.getPois3Points() %}{% set secondScore = secondScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareRight">{{ secondItem.getPois3Points()|number_format(0, '.', ',') }}</td>
+			    </tr>
+			    <tr>
+				<td class="compareLeft">{{ firstItem.getPois4Points()|number_format(0, '.', ',') }}</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.getPois4Points() >= secondItem.getPois4Points() %}{% set firstScore = firstScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareMiddle"><strong>{{ pois[3].getName() }}</strong><br /><img src="{{ pois[3].getImage() }}" /></td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.getPois4Points() <= secondItem.getPois4Points() %}{% set secondScore = secondScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareRight">{{ secondItem.getPois4Points()|number_format(0, '.', ',') }}</td>
+			    </tr>
+			    <tr>
+				<td class="compareLeft">{{ firstItem.getPois5Points()|number_format(0, '.', ',') }}</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.getPois5Points() >= secondItem.getPois5Points() %}{% set firstScore = firstScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareMiddle"><strong>{{ pois[4].getName() }}</strong><br /><img src="{{ pois[4].getImage() }}" /></td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.getPois5Points() <= secondItem.getPois5Points() %}{% set secondScore = secondScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareRight">{{ secondItem.getPois5Points()|number_format(0, '.', ',') }}</td>
+			    </tr>
+			    <tr>
+				<td class="compareLeft">{{ firstItem.getPois6Points()|number_format(0, '.', ',') }}</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.getPois6Points() >= secondItem.getPois6Points() %}{% set firstScore = firstScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareMiddle"><strong>{{ pois[5].getName() }}</strong><br /><img src="{{ pois[5].getImage() }}" /></td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.getPois6Points() <= secondItem.getPois6Points() %}{% set secondScore = secondScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareRight">{{ secondItem.getPois6Points()|number_format(0, '.', ',') }}</td>
+			    </tr>
+			    <tr>
+				<td class="compareLeft">{{ firstItem.getPois7Points()|number_format(0, '.', ',') }}</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.getPois7Points() >= secondItem.getPois7Points() %}{% set firstScore = firstScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareMiddle"><strong>{{ pois[6].getName() }}</strong><br /><img src="{{ pois[6].getImage() }}" /></td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.getPois7Points() <= secondItem.getPois7Points() %}{% set secondScore = secondScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareRight">{{ secondItem.getPois7Points()|number_format(0, '.', ',') }}</td>
+			    </tr>
+			    <tr>
+				<td class="compareLeft">{{ firstItem.getPois8Points()|number_format(0, '.', ',') }}</td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.getPois8Points() >= secondItem.getPois8Points() %}{% set firstScore = firstScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareMiddle"><strong>{{ pois[7].getName() }}</strong><br /><img src="{{ pois[7].getImage() }}" /></td>
+				<td class="compareMiddle"><img src="/bundles/hwscncstats/images/{% if firstItem.getPois8Points() <= secondItem.getPois8Points() %}{% set secondScore = secondScore + 1 %}yes.png{% else %}no.png{% endif %}" /></td>
+				<td class="compareRight">{{ secondItem.getPois8Points()|number_format(0, '.', ',') }}</td>
+			    </tr>
+			</table>
+		    </div>#}
+
+		    <div style="text-align: center">
+			<h3 class="headtext">Result</h3>
+			Alliance {{ firstItem.name }} points: <b>{{ firstScore }}</b><br />
+			Alliance {{ secondItem.name }} points: <b>{{ secondScore }}</b><br /><br />
+			<big>{% if firstScore == secondScore %}Both alliances gained same amount of points!{% elseif firstScore > secondScore %}{{ firstItem.name }} won!{% else %}{{ secondItem.name }} won!{% endif %}
+		    </div>
+
+                    {% include 'HwsCncstatsBundle:facebook:comments.html.twig' %}
+		</div>
+{% endblock %}

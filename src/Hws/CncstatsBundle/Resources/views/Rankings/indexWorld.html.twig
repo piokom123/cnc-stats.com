@@ -1,0 +1,38 @@
+{% extends '::base.html.twig' %}
+{% block title %}{{ world.name }} rankings - {% endblock %}
+{% block keywords %}rankings, { world.name }} rankings, best player on { world.name }}, best alliance on { world.name }}, {% endblock %}
+{% block description %}C&amp;C Tiberium Alliances { world.name }} rankings{% endblock %}
+{% block body %}
+		<div id="content-full">
+			<div id="box1">
+				<h2 class="title">World rankings</h2>
+				<p>Want to know who is currently the best player on {{ world.name }}? Or maybe you're looking for most aggresive alliance?.</p>
+				<p>Check out our rankings to find it out!</p><br />
+
+				<h2 class="title">How it works?</h2>
+				<p>Every day about 1:15 PM we are getting statistics from previous day <b>from {{ world.name }}</b> and selecting 5 best players
+                                in few, listed below, categories. Just select one and view top players!</p>
+                                <br />
+				<p>If you're interested, you can also check top 25 players in same categories in global rankings.
+                                <a href="{{ url('global_rankings') }}">Just click here</a>.</p>
+                                
+                                <br /><br />
+				<h2 class="title">Players rankings</h2>
+                                <p><a href="{{ url('world_ranking', {'world': world.externalId, 'type': 2}) }}">Most active</a> - players who gained most score points</p>
+                                {% if world.login != '' %}
+                                <p><a href="{{ url('world_ranking', {'world': world.externalId, 'type': 4}) }}">Most aggresive</a> - players who destroyed most bases (PVP + PVE)</p>
+                                <p><a href="{{ url('world_ranking', {'world': world.externalId, 'type': 6}) }}">Most aggresive (PVP)</a> - players who destroyed most bases (PVP)</p>
+                                <p><a href="{{ url('world_ranking', {'world': world.externalId, 'type': 8}) }}">Most aggresive (PVE)</a> - players who destroyed most bases (PVE)</p>
+                                {% endif %}
+                                
+                                <br /><br />
+				<h2 class="title">Alliances rankings</h2>
+                                <p><a href="{{ url('world_ranking', {'world': world.externalId, 'type': 10}) }}">Most active</a> - alliances which gained most score points</p>
+                                {% if world.login != '' %}
+                                <p><a href="{{ url('world_ranking', {'world': world.externalId, 'type': 12}) }}">Most aggresive</a> - alliances which destroyed most bases (PVP + PVE)</p>
+                                <p><a href="{{ url('world_ranking', {'world': world.externalId, 'type': 14}) }}">Most aggresive (PVP)</a> - alliances which destroyed most bases (PVP)</p>
+                                <p><a href="{{ url('world_ranking', {'world': world.externalId, 'type': 16}) }}">Most aggresive (PVE)</a> - alliances which destroyed most bases (PVE)</p>
+                                {% endif %}
+			</div>
+		</div>
+{% endblock %}

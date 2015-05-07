@@ -1,0 +1,39 @@
+{% extends '::base.html.twig' %}
+{% block title %}Bases on {{ world.name }} on {{ selectedDate }} - {% endblock %}
+{% block body %}
+		<div id="content-full">
+			<div id="box1">
+				<h2 class="title">Bases on {{ world.name }} on {{ selectedDate }}</h2>
+			</div>
+			<div>
+				{% if items|length > 0 %}
+				<table width="100%" id="defaultList">
+				    <tr>
+                        <td{% if sortedBy == 'scoreRanking' %} class="sorted"{% endif %}><a href="{{ url('bases_world_date_sort', {'world': world.externalId, 'date': selectedDate, 'sort': 'scoreRanking'}) }}">Ranking</a></td>
+                        <td>Name</td>
+                        <td>Owner</td>
+                        <td>Score</td>
+                        <td>Distance from center</td>
+                        <td{% if sortedBy == 'distanceRanking' %} class="sorted"{% endif %}><a href="{{ url('bases_world_date_sort', {'world': world.externalId, 'date': selectedDate, 'sort': 'distanceRanking'}) }}">Distance ranking</a></td>
+                    </tr>
+                    {% for item in items %}
+                    {% include 'HwsCncstatsBundle:adverts:lists.html.twig' %}
+                    <tr style="padding: 5px">
+                        <td>{{ item.scoreRanking }}</td>
+                        <td>{{ attribute(bases, item.externalId).name }}</td>
+                        <td><a href="{{ url('player_world_externalId_date', {'world': world.externalId, 'externalId': attribute(bases, item.externalId).playerId, 'date': selectedDate}) }}">{{ attribute(players, attribute(bases, item.externalId).playerId).name }}</a></td>
+                        <td>{{ item.score|number_format(0, '.', ',') }}</td>
+                        <td>{{ item.distanceCurrent }}</td>
+                        <td>{{ item.distanceRanking }}</td>
+				    </tr>
+				    {% endfor %}
+				</table>
+				{% else %}
+				<div style="width: 100%; text-align: center; color: red">
+				    No results found, please select another date.
+				</div>
+				{% endif %}
+			</div>
+            {% include 'HwsCncstatsBundle::pagination.html.twig' %}
+		</div>
+{% endblock %}

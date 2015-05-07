@@ -1,0 +1,13 @@
+parameters:
+#    hws_api.example.class: Hws\ApiBundle\Example
+
+services:
+    api_auth:
+        class: Hws\ApiBundle\Service\AuthService
+        arguments: [@doctrine.orm.entity_manager, @request, @service_container]
+        scope: request
+    kernel.listener.apilistener:
+        class: Hws\ApiBundle\Listener\ApiExceptionListener
+        arguments: [@service_container]
+        tags:
+         - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }

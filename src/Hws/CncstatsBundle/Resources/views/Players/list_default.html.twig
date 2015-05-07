@@ -1,0 +1,54 @@
+{% extends '::base.html.twig' %}
+{% block title %}Players on {{ world.name }} on {{ selectedDate }} - {% endblock %}
+{% block body %}
+		<div id="content-full">
+			<div id="box1">
+				<h2 class="title">Players on {{ world.name }} on {{ selectedDate }}</h2>
+			</div>
+			<div class="search_div">
+				{% include 'HwsCncstatsBundle:Players:search.html.twig' %}
+			</div>
+			<div>
+				Statistics: default | <a href="{{ url('players_world_type_date', {'world': world.externalId, 'type': 'destroyed', 'date': selectedDate}) }}">PVP / PVE</a>
+			</div>
+
+			<div>
+				{% if items|length > 0 %}
+				<table width="100%" id="defaultList">
+				    <tr>
+                        <td{% if sortedBy == 'scoreRanking' %} class="sorted"{% endif %}><a href="{{ url('players_world_type_date_sort', {'world': world.externalId, 'date': selectedDate, 'sort': 'scoreRanking'}) }}">Ranking</a></td>
+                        <td>Name</td>
+                        <td>Alliance</td>
+                        <td>Score</td>
+                        <td>Bases</td>
+                        <td>Distance from center</td>
+                        <td{% if sortedBy == 'distanceRanking' %} class="sorted"{% endif %}><a href="{{ url('players_world_type_date_sort', {'world': world.externalId, 'date': selectedDate, 'sort': 'distanceRanking'}) }}">Distance ranking</a></td>
+                    </tr>
+                    {% for item in items %}
+                    {% include 'HwsCncstatsBundle:adverts:lists.html.twig' %}
+                    <tr style="padding: 5px">
+                        <td>{{ item.scoreRanking }}</td>
+                        <td><a href="{{ url('player_world_externalId_date', {'world': world.externalId, 'externalId': item.externalId, 'date': selectedDate}) }}">{{ attribute(players, item.externalId).name }}</a></td>
+                        <td>{% if item.allianceId != '' %}<a href="{{ url('alliance_world_externalId_date', {'world': world.externalId, 'externalId': item.allianceId, 'date': selectedDate}) }}">{{ attribute(alliances, item.allianceId).name }}</a>{% else %}-{% endif %}</td>
+                        <td>{{ item.scoreOverall|number_format(0, '.', ',') }}</td>
+                        <td>{{ item.basesCount }}</td>
+                        <td>{{ item.distanceCurrent }}</td>
+                        <td>{{ item.distanceRanking }}</td>
+				    </tr>
+				    {% endfor %}
+				</table>
+				{% else %}
+				<div style="width: 100%; text-align: center; color: red">
+				    No results found, please select another date.
+				</div>
+				{% endif %}
+			</div>
+            {% include 'HwsCncstatsBundle::pagination.html.twig' %}
+		</div>
+<input type="hidden" id="rankingType" value="" />
+
+{% endblock %}
+{% block javascripts %}
+<script src="/bundles/hwscncstats/js/compareLib.js"></script>
+<script src="/bundles/hwscncstats/js/players_list.js"></script>
+{% endblock %}

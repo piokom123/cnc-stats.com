@@ -1,0 +1,71 @@
+{% extends '::base.html.twig' %}
+{% block title %}Base {{ base.name }} on {{ world.name }} on {{ selectedDate }}- {% endblock %}
+{% block keywords %}base {{ base.name }} statistics, base {{ base.name }} score, {{ base.name }}, {% endblock %}
+{% block description %}C&amp;C Tiberium Alliances {{ base.name }} base detailed statistics{% endblock %}
+{% block body %}
+		<div id="content-full">
+			<div id="box1">
+				<h2 class="title">Base "{{ base.name }}" on {{ world.name }} on {{ selectedDate }}</h2>
+				<div style="text-align: center"><a href="{{ url('bases_world', {'world': world.externalId}) }}">go back to list</a></div>
+                <div style="text-align: right">Situation on {{ selectedDate }}</div>
+			</div>
+			<div>
+			    <h3 class="headtext">Basic informations</h3>
+			    <table width="70%" style="margin-left: auto; margin-right: auto;">
+				<tr>
+				    <td width="30%">Owner:</td>
+				    <td width="18%">{% if base.playerId != '' %}<a href="{{ url('player_world_externalId_date', {'world': world.externalId, 'externalId': base.playerId, 'date': selectedDate}) }}">{{ player.name }}</a>{% else %}-{% endif %}</td>
+				    <td width="30%"> </td>
+				    <td width="22%"> </td>
+				</tr>
+				<tr>
+				    <td width="30%">Name:</td>
+				    <td width="18%">{{ base.name }}</td>
+				    <td>Score:</td>
+				    <td>{{ item.score|number_format(0, '.', ',') }}</td>
+				</tr>
+			    </table>
+			</div>
+
+			{#{% if nameChanges != false %}
+			<div style="padding-top: 15px; text-align: center">
+			    <h3 class="headtext">Name changes</h3>
+			    <table width="80%" style="margin-left: auto; margin-right: auto;">
+				<tr>
+				    <td width="20%">Date</td>
+				    <td width="40%">Old name</td>
+				    <td width="40%">New name</td>
+				</tr>
+				{% for forItem in nameChanges %}
+				<tr>
+				    <td>{% if forItem.date.date > 0 %}{{ forItem.date|date('Y-m-d') }}{% endif %}</td>
+				    <td>{{ forItem.oldName }}</td>
+				    <td>{{ forItem.newName }}</td>
+				</tr>
+				{% endfor %}
+			    </table>
+			</div>
+			{% endif %}#}
+
+			{#{% if coordsChanges != false %}
+			<div style="padding-top: 15px; text-align: center">
+			    <h3 class="headtext">Coords changes</h3>
+
+			    <table width="80%" style="margin-left: auto; margin-right: auto;">
+				<tr>
+				    <td width="20%">Date</td>
+				    <td width="40%">Old coords</td>
+				    <td width="40%">New coords</td>
+				</tr>
+				{% for forItem in coordsChanges %}
+				<tr>
+				    <td>{% if forItem.date.date > 0 %}{{ forItem.date|date('Y-m-d') }}{% endif %}</td>
+				    <td><a target="_blank" rel="nofollow" href="{{ map_service.getLink(world.externalId, item.externalId, forItem.oldCoords) }}">{{ forItem.oldCoords }}</a></td>
+				    <td><a target="_blank" rel="nofollow" href="{{ map_service.getLink(world.externalId, item.externalId, forItem.newCoords) }}">{{ forItem.newCoords }}</a></td>
+				</tr>
+				{% endfor %}
+			    </table>
+			</div>
+			{% endif %}#}
+		</div>
+{% endblock %}

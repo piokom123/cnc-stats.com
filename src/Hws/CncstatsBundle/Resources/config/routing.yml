@@ -1,0 +1,415 @@
+homepage:
+    pattern:  /
+    defaults: { _controller: HwsCncstatsBundle:Default:index }
+
+thanks:
+    pattern:  /thanks
+    defaults: { _controller: HwsCncstatsBundle:Default:thanks }
+
+adverts:
+    pattern:  /adverts
+    defaults: { _controller: HwsCncstatsBundle:Default:adverts }
+
+available_worlds:
+    pattern:  /worlds.json
+    defaults: { _controller: HwsCncstatsBundle:Default:availableworlds, _format: json }
+
+blocked:
+    pattern:  /blocked
+    defaults: { _controller: HwsCncstatsBundle:Default:blocked }
+
+worlds:
+    pattern:  /worlds
+    defaults: { _controller: HwsCncstatsBundle:Worlds:index }
+worlds_details:
+    pattern:  /worlds/details
+    defaults: { _controller: HwsCncstatsBundle:Worlds:details }
+world:
+    pattern:  /world
+    defaults: { _controller: HwsCncstatsBundle:Worlds:index }
+world_id:
+    pattern:  /world/{world}
+    defaults: { _controller: HwsCncstatsBundle:Default:world }
+    requirements:
+      world: \d+
+
+alliances_world:
+    pattern:  /world/{world}/alliances
+    defaults: { _controller: HwsCncstatsBundle:Alliances:index, world: null, type: default, date: null, sort: scoreRanking, page: 1 }
+    requirements:
+      sort: scoreRanking|scoreAverageRanking|scoreTopRanking|distanceAverageRanking|destroyedRanking|pvpRanking|pveRanking
+      type: destroyed|default
+alliances_world_type:
+    pattern:  /world/{world}/alliances/{type}
+    defaults: { _controller: HwsCncstatsBundle:Alliances:index, world: null, type: default, date: null, sort: scoreRanking, page: 1 }
+    requirements:
+      sort: scoreRanking|scoreAverageRanking|scoreTopRanking|distanceAverageRanking|destroyedRanking|pvpRanking|pveRanking
+      type: destroyed|default
+alliances_world_type_sort:
+    pattern:  /world/{world}/alliances/{type}/sort/{sort}
+    defaults: { _controller: HwsCncstatsBundle:Alliances:index, world: null, type: default, date: null, sort: scoreRanking, page: 1 }
+    requirements:
+      sort: scoreRanking|scoreAverageRanking|scoreTopRanking|distanceAverageRanking|destroyedRanking|pvpRanking|pveRanking
+      type: destroyed|default
+alliances_world_type_sort_page:
+    pattern:  /world/{world}/alliances/{type}/sort/{sort}/page/{page}
+    defaults: { _controller: HwsCncstatsBundle:Alliances:index, world: null, type: default, date: null, sort: scoreRanking, page: 1 }
+    requirements:
+      sort: scoreRanking|scoreAverageRanking|scoreTopRanking|distanceAverageRanking|destroyedRanking|pvpRanking|pveRanking
+      type: destroyed|default
+alliances_world_type_date:
+    pattern:  /world/{world}/alliances/{type}/date/{date}
+    defaults: { _controller: HwsCncstatsBundle:Alliances:index, world: null, type: default, date: null, sort: scoreRanking, page: 1 }
+    requirements:
+      sort: scoreRanking|scoreAverageRanking|scoreTopRanking|distanceAverageRanking|destroyedRanking|pvpRanking|pveRanking
+      type: destroyed|default
+alliances_world_type_date_page:
+    pattern:  /world/{world}/alliances/{type}/date/{date}/page/{page}
+    defaults: { _controller: HwsCncstatsBundle:Alliances:index, world: null, type: default, date: null, sort: scoreRanking, page: 1 }
+    requirements:
+      sort: scoreRanking|scoreAverageRanking|scoreTopRanking|distanceAverageRanking|destroyedRanking|pvpRanking|pveRanking
+      type: destroyed|default
+alliances_world_type_date_sort:
+    pattern:  /world/{world}/alliances/{type}/date/{date}/sort/{sort}
+    defaults: { _controller: HwsCncstatsBundle:Alliances:index, world: null, type: default, date: null, sort: scoreRanking, page: 1 }
+    requirements:
+      sort: scoreRanking|scoreAverageRanking|scoreTopRanking|distanceAverageRanking|destroyedRanking|pvpRanking|pveRanking
+      type: destroyed|default
+alliances_world_type_date_sort_page:
+    pattern:  /world/{world}/alliances/{type}/date/{date}/sort/{sort}/page/{page}
+    defaults: { _controller: HwsCncstatsBundle:Alliances:index, world: null, type: default, date: null, sort: scoreRanking, page: 1 }
+    requirements:
+      sort: scoreRanking|scoreAverageRanking|scoreTopRanking|distanceAverageRanking|destroyedRanking|pvpRanking|pveRanking
+      type: destroyed|default
+alliance_blank:
+    pattern:  /world/{world}/alliance
+    defaults: { _controller: HwsCncstatsBundle:Alliances:index, world: null, type: default }
+
+alliance_world_externalId:
+    pattern:  /world/{world}/alliance/{externalId}
+    defaults: { _controller: HwsCncstatsBundle:Alliances:alliance, world: null, externalId: null, date: null }
+    requirements:
+      externalId: \d+
+alliance_world_externalId_date:
+    pattern:  /world/{world}/alliance/{externalId}/date/{date}
+    defaults: { _controller: HwsCncstatsBundle:Alliances:alliance, world: null, externalId: null, date: null }
+    requirements:
+      externalId: \d+
+
+allianceMembers_world_externalId:
+    pattern:  /world/{world}/alliance/{externalId}/members
+    defaults: { _controller: HwsCncstatsBundle:Alliances:members, world: null, externalId: null, date: null }
+    requirements:
+      externalId: \d+
+allianceMembers_world_externalId_date:
+    pattern:  /world/{world}/alliance/{externalId}/members/date/{date}
+    defaults: { _controller: HwsCncstatsBundle:Alliances:members, world: null, externalId: null, date: null }
+    requirements:
+      externalId: \d+
+
+allianceScore_world_type_externalId:
+    pattern:  /world/{world}/alliance/{externalId}/score
+    defaults: { _controller: HwsCncstatsBundle:Alliances:charts, world: null, type: score, externalId: null, dateFrom: null }
+    requirements:
+      externalId: \d+
+allianceScore_world_type_externalId_dateFrom:
+    pattern:  /world/{world}/alliance/{externalId}/score/date/{dateFrom}
+    defaults: { _controller: HwsCncstatsBundle:Alliances:charts, world: null, type: score, externalId: null, dateFrom: null }
+    requirements:
+      externalId: \d+
+
+allianceBases_world_type_externalId:
+    pattern:  /world/{world}/alliance/{externalId}/bases
+    defaults: { _controller: HwsCncstatsBundle:Alliances:charts, world: null, type: bases, externalId: null, dateFrom: null }
+    requirements:
+      externalId: \d+
+allianceBases_world_type_externalId_dateFrom:
+    pattern:  /world/{world}/alliance/{externalId}/bases/date/{dateFrom}
+    defaults: { _controller: HwsCncstatsBundle:Alliances:charts, world: null, type: bases, externalId: null, dateFrom: null }
+    requirements:
+      externalId: \d+
+
+allianceChart_world_externalId:
+    pattern:  /world/{world}/alliance/{externalId}/chart
+    defaults: { _controller: HwsCncstatsBundle:Charts:alliancePoi }
+    requirements:
+      externalId: \d+
+
+allianceChartPoi_world_externalId:
+    pattern:  /world/{world}/alliance/{externalId}/charts/poi
+    defaults: { _controller: HwsCncstatsBundle:Charts:alliancePois }
+    requirements:
+      externalId: \d+
+
+players:
+    pattern:  /players/{type}
+    defaults: { _controller: HwsCncstatsBundle:Players:index, type: default, date: null, sort: scoreRanking }
+    requirements:
+      type: default|destroyed
+players_world:
+    pattern:  /world/{world}/players
+    defaults: { _controller: HwsCncstatsBundle:Players:index, world: null, type: default, date: null, sort: scoreRanking, page: 1 }
+    requirements:
+      type: default|destroyed
+players_world_type:
+    pattern:  /world/{world}/players/{type}
+    defaults: { _controller: HwsCncstatsBundle:Players:index, world: null, type: default, date: null, sort: scoreRanking, page: 1 }
+    requirements:
+      type: default|destroyed
+players_world_type_date:
+    pattern:  /world/{world}/players/{type}/date/{date}
+    defaults: { _controller: HwsCncstatsBundle:Players:index, world: null, type: default, date: null, sort: scoreRanking, page: 1 }
+    requirements:
+      type: default|destroyed
+players_world_type_sort:
+    pattern:  /world/{world}/players/{type}/sort/{sort}
+    defaults: { _controller: HwsCncstatsBundle:Players:index, world: null, type: default, date: null, sort: scoreRanking, page: 1 }
+    requirements:
+      type: default|destroyed
+      sort: scoreRanking|distanceRanking|destroyedRanking|pvpRanking|pveRanking
+players_world_type_date_sort:
+    pattern:  /world/{world}/players/{type}/date/{date}/sort/{sort}
+    defaults: { _controller: HwsCncstatsBundle:Players:index, world: null, type: default, date: null, sort: scoreRanking, page: 1 }
+    requirements:
+      type: default|destroyed
+      sort: scoreRanking|distanceRanking|destroyedRanking|pvpRanking|pveRanking
+players_world_type_date_sort_page:
+    pattern:  /world/{world}/players/{type}/date/{date}/sort/{sort}/page/{page}
+    defaults: { _controller: HwsCncstatsBundle:Players:index, world: null, type: default, date: null, sort: scoreRanking, page: 1 }
+    requirements:
+      type: default|destroyed
+      sort: scoreRanking|distanceRanking|destroyedRanking|pvpRanking|pveRanking
+player_blank:
+    pattern:  /world/{world}/player
+    defaults: { _controller: HwsCncstatsBundle:Players:index, type: default }
+
+player_world_externalId:
+    pattern:  /world/{world}/player/{externalId}
+    defaults: { _controller: HwsCncstatsBundle:Players:player, world: null, externalId: null, date: null }
+    requirements:
+      externalId: \d+
+player_world_externalId_date:
+    pattern:  /world/{world}/player/{externalId}/date/{date}
+    defaults: { _controller: HwsCncstatsBundle:Players:player, world: null, externalId: null, date: null }
+    requirements:
+      externalId: \d+
+
+playerScore_world_externalId:
+    pattern:  /world/{world}/player/{externalId}/score
+    defaults: { _controller: HwsCncstatsBundle:Players:score, world: null, externalId: null, dateFrom: null }
+    requirements:
+      externalId: \d+
+playerScore_world_externalId_dateFrom:
+    pattern:  /world/{world}/player/{externalId}/score/date/{dateFrom}
+    defaults: { _controller: HwsCncstatsBundle:Players:score, world: null, externalId: null, dateFrom: null }
+    requirements:
+      externalId: \d+
+
+playerBases_world_externalId:
+    pattern:  /world/{world}/player/{externalId}/bases
+    defaults: { _controller: HwsCncstatsBundle:Players:bases, world: null, externalId: null, dateFrom: null }
+    requirements:
+      externalId: \d+
+playerBases_world_externalId_dateFrom:
+    pattern:  /world/{world}/player/{externalId}/bases/date/{dateFrom}
+    defaults: { _controller: HwsCncstatsBundle:Players:bases, world: null, externalId: null, dateFrom: null }
+    requirements:
+      externalId: \d+
+
+player_rankings:
+    pattern:  /world/{world}/player/{externalId}/rankings
+    defaults: { _controller: HwsCncstatsBundle:Players:rankings }
+    requirements:
+      externalId: \d+
+
+compare:
+    pattern:  /compare
+    defaults: { _controller: HwsCncstatsBundle:Compare:index }
+compare_world:
+    pattern:  /world/{world}/compare
+    defaults: { _controller: HwsCncstatsBundle:Compare:index }
+
+compareAlliances_world_firstId_secondId_slug:
+    pattern:  /world/{world}/compare/alliances/{firstId}-{secondId}/{slug}
+    defaults: { _controller: HwsCncstatsBundle:Compare:compareAlliances, world: null, firstId: null, secondId: null, slug: null, date: null }
+    requirements:
+      firstId: \d+
+      secondId: \d+
+compareAlliances_world_firstId_secondId_slug_date:
+    pattern:  /world/{world}/compare/alliances/{firstId}-{secondId}/{slug}/date/{date}
+    defaults: { _controller: HwsCncstatsBundle:Compare:compareAlliances, world: null, firstId: null, secondId: null, slug: null, date: null }
+    requirements:
+      firstId: \d+
+      secondId: \d+
+
+compareAlliancesCharts_world_firstId_secondId_slug:
+    pattern:  /world/{world}/compare/alliances/{firstId}-{secondId}/{slug}/charts
+    defaults: { _controller: HwsCncstatsBundle:Compare:compareAlliancesCharts, world: null, firstId: null, secondId: null, slug: null, dateFrom: null }
+    requirements:
+      firstId: \d+
+      secondId: \d+
+compareAlliancesCharts_world_firstId_secondId_slug_dateFrom:
+    pattern:  /world/{world}/compare/alliances/{firstId}-{secondId}/{slug}/date/{dateFrom}/charts
+    defaults: { _controller: HwsCncstatsBundle:Compare:compareAlliancesCharts, world: null, firstId: null, secondId: null, slug: null, dateFrom: null }
+    requirements:
+      firstId: \d+
+      secondId: \d+
+
+comparePlayers_world_firstId_secondId_slug:
+    pattern:  /world/{world}/compare/players/{firstId}-{secondId}/{slug}
+    defaults: { _controller: HwsCncstatsBundle:Compare:comparePlayers, world: null, firstId: null, secondId: null, slug: null, date: null }
+    requirements:
+      firstId: \d+
+      secondId: \d+
+comparePlayers_world_firstId_secondId_slug_date:
+    pattern:  /world/{world}/compare/players/{firstId}-{secondId}/{slug}/date/{date}
+    defaults: { _controller: HwsCncstatsBundle:Compare:comparePlayers, world: null, firstId: null, secondId: null, slug: null, date: null }
+    requirements:
+      firstId: \d+
+      secondId: \d+
+
+comparePlayersCharts_world_firstId_secondId_slug:
+    pattern:  /world/{world}/compare/players/{firstId}-{secondId}/{slug}/charts
+    defaults: { _controller: HwsCncstatsBundle:Compare:comparePlayersCharts, world: null, firstId: null, secondId: null, slug: null, dateFrom: null }
+    requirements:
+      firstId: \d+
+      secondId: \d+
+comparePlayersCharts_world_firstId_secondId_slug_dateFrom:
+    pattern:  /world/{world}/compare/players/{firstId}-{secondId}/{slug}/date/{dateFrom}/charts
+    defaults: { _controller: HwsCncstatsBundle:Compare:comparePlayersCharts, world: null, firstId: null, secondId: null, slug: null, dateFrom: null }
+    requirements:
+      firstId: \d+
+      secondId: \d+
+
+signature:
+    pattern:  /signature
+    defaults: { _controller: HwsCncstatsBundle:Signature:index }
+signature_world:
+    pattern:  /world/{world}/signature
+    defaults: { _controller: HwsCncstatsBundle:Signature:index }
+signature_upload:
+    pattern:  /world/{world}/signature/upload
+    defaults: { _controller: HwsCncstatsBundle:Signature:upload, _format: json }
+
+bases:
+    pattern:  /bases
+    defaults: { _controller: HwsCncstatsBundle:Bases:index, date: null, sort: scoreRanking }
+bases_world:
+    pattern:  /world/{world}/bases
+    defaults: { _controller: HwsCncstatsBundle:Bases:index, world: null, date: null, sort: scoreRanking, page: 1 }
+bases_world_date:
+    pattern:  /world/{world}/bases/date/{date}
+    defaults: { _controller: HwsCncstatsBundle:Bases:index, world: null, date: null, sort: scoreRanking, page: 1 }
+bases_world_sort:
+    pattern:  /world/{world}/bases/sort/{sort}
+    defaults: { _controller: HwsCncstatsBundle:Bases:index, world: null, date: null, sort: scoreRanking, page: 1 }
+    requirements:
+      sort: scoreRanking|distanceRanking
+bases_world_date_sort:
+    pattern:  /world/{world}/bases/date/{date}/sort/{sort}
+    defaults: { _controller: HwsCncstatsBundle:Bases:index, world: null, date: null, sort: scoreRanking, page: 1 }
+    requirements:
+      sort: scoreRanking|distanceRanking
+bases_world_date_sort_page:
+    pattern:  /world/{world}/bases/date/{date}/sort/{sort}/page/{page}
+    defaults: { _controller: HwsCncstatsBundle:Bases:index, world: null, date: null, sort: scoreRanking, page: 1 }
+    requirements:
+      sort: scoreRanking|distanceRanking
+base_blank:
+    pattern:  /world/{world}/base
+    defaults: { _controller: HwsCncstatsBundle:Bases:index }
+
+base_world_externalId:
+    pattern:  /world/{world}/base/{externalId}
+    defaults: { _controller: HwsCncstatsBundle:Bases:base, world: null, externalId: null, date: null }
+    requirements:
+      externalId: \d+
+base_world_externalId_date:
+    pattern:  /world/{world}/base/{externalId}/date/{date}
+    defaults: { _controller: HwsCncstatsBundle:Bases:base, world: null, externalId: null, date: null }
+    requirements:
+      externalId: \d+
+
+pois_world:
+    pattern:  /world/{world}/pois
+    defaults: { _controller: HwsCncstatsBundle:Pois:index, world: null, sort: level, page: 1 }
+    requirements:
+      sort: (level|distance)
+pois_world_page:
+    pattern:  /world/{world}/pois/page/{page}
+    defaults: { _controller: HwsCncstatsBundle:Pois:index, world: null, sort: level, page: 1 }
+    requirements:
+      sort: (level|distance)
+pois_world_sort:
+    pattern:  /world/{world}/pois/sort/{sort}
+    defaults: { _controller: HwsCncstatsBundle:Pois:index, world: null, sort: level, page: 1 }
+    requirements:
+      sort: (level|distance)
+pois_world_sort_page:
+    pattern:  /world/{world}/pois/sort/{sort}/page/{page}
+    defaults: { _controller: HwsCncstatsBundle:Pois:index, world: null, sort: level, page: 1 }
+    requirements:
+      sort: (level|distance)
+
+global_rankings:
+    pattern:  /rankings
+    defaults: { _controller: HwsCncstatsBundle:Rankings:index, global: 1 }
+global_ranking:
+    pattern:  /ranking/{type}
+    defaults: { _controller: HwsCncstatsBundle:Rankings:ranking, global: 1, type: default, date: default, period: day }
+global_ranking_date:
+    pattern:  /ranking/{type}/date/{date}
+    defaults: { _controller: HwsCncstatsBundle:Rankings:ranking, global: 1, type: default, date: default, period: day }
+global_ranking_period:
+    pattern:  /ranking/{type}/{period}
+    defaults: { _controller: HwsCncstatsBundle:Rankings:ranking, global: 1, type: default, date: default, period: day }
+    requirements:
+      period: (day|week|month)
+global_ranking_date:
+    pattern:  /ranking/{type}/date/{date}/{period}
+    defaults: { _controller: HwsCncstatsBundle:Rankings:ranking, global: 1, type: default, date: default, period: day }
+    requirements:
+      period: (day|week|month)
+      
+world_rankings:
+    pattern:  /world/{world}/rankings
+    defaults: { _controller: HwsCncstatsBundle:Rankings:index, global: 0 }
+    requirements:
+      world: \d+
+world_ranking:
+    pattern:  /world/{world}/ranking/{type}
+    defaults: { _controller: HwsCncstatsBundle:Rankings:ranking, global: 0, type: default, date: default, period: day }
+    requirements:
+      world: \d+
+world_ranking_date:
+    pattern:  /world/{world}/ranking/{type}/date/{date}
+    defaults: { _controller: HwsCncstatsBundle:Rankings:ranking, global: 0, type: default, date: default, period: day }
+    requirements:
+      world: \d+
+world_ranking_period:
+    pattern:  /world/{world}/ranking/{type}/{period}
+    defaults: { _controller: HwsCncstatsBundle:Rankings:ranking, global: 0, type: default, date: default, period: day }
+    requirements:
+      period: (day|week|month)
+      world: \d+
+world_ranking_date:
+    pattern:  /world/{world}/ranking/{type}/date/{date}/{period}
+    defaults: { _controller: HwsCncstatsBundle:Rankings:ranking, global: 0, type: default, date: default, period: day }
+    requirements:
+      period: (day|week|month)
+      world: \d+
+
+download_csv_pois:
+    pattern: /world/{world}/download/pois
+    defaults: { _controller: HwsCncstatsBundle:Download:pois }
+    requirements:
+      world: \d+
+
+error:
+    pattern: /problem/{code}
+    defaults: { _controller: HwsCncstatsBundle:Default:error, code: 500 }
+
+_demo:
+        resource: "@SaadTaziGChartBundle/Resources/config/routing.yml"
+        type:     yaml
+        prefix:   /gchart

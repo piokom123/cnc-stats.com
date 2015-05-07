@@ -1,0 +1,13 @@
+{% extends '::base.html.twig' %}
+{% block body %}
+		<div id="content-full">
+			<div id="box1">
+				<h2 class="title">Downloading POIs list from {{ world.name }}</h2>
+                                <p style="padding: 25px">Your file is being prepared and download will start <span id="timer">in 5 seconds</span>.</p>
+			</div>
+			{% include 'HwsCncstatsBundle:adverts:download.html.twig' %}
+		</div>
+{% endblock %}
+{% block javascripts %}
+<script src="/bundles/hwscncstats/js/download.js"></script>
+{% endblock %}

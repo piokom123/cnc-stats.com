@@ -1,0 +1,53 @@
+parameters:
+#    hws_cncstats.example.class: Hws\CncstatsBundle\Example
+
+services:
+    game_service:
+        class: Hws\CncstatsBundle\Service\GameService
+        arguments: []
+    dto:
+        class: Hws\CncstatsBundle\Service\DTOService
+        arguments: []
+    pager:
+        class: Hws\CncstatsBundle\Service\PagerService
+        arguments: []
+    url:
+        class: Hws\CncstatsBundle\Service\UrlService
+        arguments: [@request, @router]
+        scope: request
+    access:
+        class: Hws\CncstatsBundle\Service\AccessService
+        arguments: [@query]
+        scope: request
+    world_service:
+        class: Hws\CncstatsBundle\Service\WorldService
+        arguments: [@doctrine.orm.entity_manager, @request, @service_container]
+        scope: request
+    map_service:
+        class: Hws\CncstatsBundle\Service\MapService
+        arguments: []
+    poi_service:
+        class: Hws\CncstatsBundle\Service\PoiService
+        arguments: []
+    better_query_subscriber:
+        class: Hws\CncstatsBundle\Service\Pagination\BetterQuerySubscriber
+        scope: request
+        tag: knp_paginator.subscriber
+        arguments: []
+    player_activity_bar:
+        class: Hws\CncstatsBundle\Twig\CncTwigExtension
+        tags:
+            -  { name: twig.extension }
+        arguments: []
+    kernel.listener.apilistener:
+        class: Hws\CncstatsBundle\Listener\CncstatsExceptionListener
+        arguments: [@service_container]
+        tags:
+         - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+    query:
+        class: Hws\CncstatsBundle\Service\QueryService
+        arguments: [@doctrine.orm.entity_manager, @doctrine.orm.worlds_entity_manager, @world_service]
+        scope: request
+    chart_service:
+        class: Hws\CncstatsBundle\Service\ChartService
+        arguments: []

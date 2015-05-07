@@ -1,0 +1,39 @@
+<div class="pagination">
+    <div class="leftPagination">
+    {% if pagination.enableFirst %}
+        <a href="{{ pagination.urlFirst }}">&lt;&lt; first</a>
+    {% endif %}
+
+    {% if pagination.enablePrevious %}
+        <a href="{{ pagination.urlPrevious }}">&lt; previous</a>
+    {% endif %}
+    </div>
+
+    <div class="previousPagesPagination">
+    {% if pagination.beforeCurrent|length > 0 %}
+        {% for number, url in pagination.beforeCurrent %}
+            <a href="{{ url }}">{{ number }}</a>
+        {% endfor %}
+    {% endif %}
+    </div>
+
+    <span style="font-weight: bold" class="currentPagePagination">{{ pagination.currentPage }}</span>
+
+    <div class="nextPagesPagination">
+    {% if pagination.afterCurrent|length > 0 %}
+        {% for number, url in pagination.afterCurrent %}
+            <a href="{{ url }}">{{ number }}</a>
+        {% endfor %}
+    {% endif %}
+    </div>
+
+    <div class="rightPagination">
+    {% if pagination.enableNext %}
+        <a href="{{ pagination.urlNext }}">next &gt;</a>
+    {% endif %}
+
+    {% if pagination.enableLast %}
+        <a href="{{ pagination.urlLast }}">last &gt;&gt;</a>
+    {% endif %}
+    </div>
+</div>

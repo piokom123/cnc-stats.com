@@ -1,0 +1,59 @@
+{% extends '::base.html.twig' %}
+{% block title %}Worlds list - {% endblock %}
+{% block keywords %}worlds list, worlds statistics, {% endblock %}
+{% block description %}C&amp;C Tiberium Alliances worlds list with general statistics{% endblock %}
+{% block body %}
+		<div id="content-full">
+			<div id="box1">
+				<h2 class="title">Worlds</h2>
+			</div>
+			<div>
+				<table width="100%">
+				    <tr>
+					<td>Name</td>
+					<td>Players</td>
+					<td>Alliances</td>
+					<td>Bases</td>
+					<td>Destroyed bases</td>
+					<td>Taken POI's</td>
+				    </tr>
+				    {% for item in items %}
+					{% if item.name != '' %}
+				    <tr style="padding: 5px">
+					<td>{{ item.name }}</td>
+					<td class="countPlayers">{{ item.players|number_format(0, '.', ',') }}</td>
+					<td class="countAlliances">{{ item.alliances|number_format(0, '.', ',') }}</td>
+					<td>{{ item.bases|number_format(0, '.', ',') }}</td>
+					<td>{{ item.basesDestroyed|number_format(0, '.', ',') }}</td>
+					<td>{{ item.pois|number_format(0, '.', ',') }}</td>
+				    </tr>
+					{% endif %}
+				    {% endfor %}
+                                    <tr>
+					<td colspan="7">&nbsp;</td>
+				    </tr>
+				    <tr>
+					<td>sum</td>
+					<td id="sumPlayers"></td>
+					<td id="sumAlliances"></td>
+					<td colspan="3">&nbsp;</td>
+				    </tr>
+				</table>
+			</div>
+		</div>
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript">
+    var count = 0;
+    jQuery('.countPlayers').each(function() {
+        count += parseInt(jQuery(this).html().replace(',', ''));
+    })
+    jQuery('#sumPlayers').html(count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+
+    count = 0;
+    jQuery('.countAlliances').each(function() {
+        count += parseInt(jQuery(this).html().replace(',', ''));
+    })
+    jQuery('#sumAlliances').html(count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+</script>
+{% endblock %}

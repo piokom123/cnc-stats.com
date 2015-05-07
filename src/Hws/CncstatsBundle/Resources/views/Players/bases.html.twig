@@ -1,0 +1,51 @@
+{% extends '::base.html.twig' %}
+{% block title %}{{ player.name }} bases on {{ world.name }} on {{ selectedDate }} - {% endblock %}
+{% block body %}
+		<div id="content-full">
+			<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+			<script type="text/javascript">
+			    google.load("visualization", "1", {packages:["corechart", 'table', 'treemap', 'gauge']});
+			    google.load('jquery', '1.6.0');
+			</script>
+			<div id="box1">
+				<h2 class="title">{{ player.name }} bases</h2>
+				<div style="text-align: center"><a href="{{ url('player_world_externalId_date', {'world': world.externalId, 'externalId': player.externalId, 'date': selectedDate}) }}">go back to statistics</a></div>
+			</div>
+
+			<div style="padding-top: 30px">
+			    <div id="chart1" class="chart_div_members"></div>
+			    <script>
+			    $(function() {
+			    {{ gchart_column_chart(chart1, 'chart1', 700, 400, 'All destroyed bases', {'hAxis': {'slantedText': true}}) }}
+			    });
+			    </script>
+			</div>
+
+			<div style="padding-top: 30px">
+			    <div id="chart2" class="chart_div_members"></div>
+			    <script>
+			    $(function() {
+			    {{ gchart_column_chart(chart2, 'chart2', 700, 400, 'Destroyed bases (PVP)', {'hAxis': {'slantedText': true}}) }}
+			    });
+			    </script>
+			</div>
+
+			<div style="padding-top: 30px">
+			    <div id="chart3" class="chart_div_members"></div>
+			    <script>
+			    $(function() {
+			    {{ gchart_column_chart(chart3, 'chart3', 700, 400, 'Destroyed bases (PVE)', {'hAxis': {'slantedText': true}}) }}
+			    });
+			    </script>
+			</div>
+
+			<div style="padding-top: 30px">
+			    <div id="chart4" class="chart_div_members"></div>
+			    <script>
+			    $(function() {
+			    {{ gchart_column_chart(chart4, 'chart4', 700, 400, 'Player bases', {'hAxis': {'slantedText': true}}) }}
+			    });
+			    </script>
+			</div>
+		</div>
+{% endblock %}

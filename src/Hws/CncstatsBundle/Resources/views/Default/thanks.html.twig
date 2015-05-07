@@ -1,0 +1,41 @@
+{% extends '::base.html.twig' %}
+{% block body %}
+		<div id="content-full">
+			<div id="box1">
+				<h2 class="title">Who helped us?</h2>
+				<p>Many different people supported us with suggestions, ideas or even money.</p>
+				<p>We want to thank you all, this project wouldn't exist without you!</p><br />
+
+				<h2 class="title">Want to help?</h2>
+				<p>We are open for any suggestions, ideas or whatever you want to say us. Even simple "I like your project" is very helpful
+				and motivates us to work harder :)</p>
+				<p>You can contact with us via <b>admin(at)cnc-stats.com</b> email.</p><br />
+				<p>If you want to support us with money (servers are more and more expensive, so it's good idea :) ) you can do it by clicking this button</p>
+				<div style="width: 100%; text-align: center; padding-bottom: 70px">
+				    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+				    <input type="hidden" name="cmd" value="_s-xclick">
+				    <input type="hidden" name="hosted_button_id" value="KXSPVQ5UB5XZS">
+				    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+				    <img alt="" border="0" src="https://www.paypalobjects.com/pl_PL/i/scr/pixel.gif" width="1" height="1">
+				    </form>
+				</div>
+                
+                <p>You can also support us with DogeCoins or BitCoins now!</p>
+                <p>Our wallets addresses:</p>
+                <p>DogeCoin: <b>DEoXjEhKKAp8TZFYHmCtc8b7VLEZxfACTN</b></p>
+                <p>BitCoin: <b>19oW9AXwXqCuS3WnPrZMdroAAjwJFUrWrr</b></p>
+                <br />
+                <p>Want to be listed below? Email us with your nick and how much did you send (as verification)!</p>
+
+				<h2 class="title" style="padding-top: 25px">Special thanks</h2>
+				<p>There are few people that helped us more than others and they can't be forgotten :)</p><br />
+				<p><b>ScR3d31</b> - donated account with access to closed worlds: Monde 1 (France), Monde 2 (France)</p>
+				<p><b>Tacitus55</b> - donated account with access to closed worlds: Világ 1, Welt 10 (Germany), Welt 17 (Germany), Świat 2 (Poland)</p>
+				<p><b>pigDESTROY</b> - donated account with access to closed world: World 6 (English)</p>
+				<p><b>sgfan206</b> - donated account with access to closed world: Closed Beta 1</p>
+				<p><b>NBD Federation</b> alliance - donated account with access to closed worlds: World 24 (Europe), World 27 (Europe) and World 31 (Europe)</p>
+				<p><b>rafale_b3</b> - donated account with access to closed worlds: Mundo 3, Mundo 4</p>
+                <p><b>Malogalotalotimm</b> - donated account with access to closed world: World 44</p>
+			</div>
+		</div>
+{% endblock %}

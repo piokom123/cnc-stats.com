@@ -1,0 +1,67 @@
+{% extends '::base.html.twig' %}
+{% block title %}{{ rankingType.name }} ranking on {{ world.name }} - {% endblock %}
+{% block body %}
+		<div id="content-full">
+			<div id="box1">
+				<h2 class="title">{{ rankingType.name }} ranking on {{ world.name }}</h2>
+			</div>
+			<div class="search_div">
+				{% include 'HwsCncstatsBundle:Rankings:date.html.twig' %}
+			</div>
+			<div style="text-align: center">
+				{% if items|length > 0 %}
+				<table width="100%">
+				    <tr>
+					<td>Ranking</td>
+					<td>Value</td>
+                                        {% if rankingType.type == 'base' %}
+					<td>Player</td>
+                                        {% endif %}
+                                        {% if rankingType.type == 'player' or rankingType.type == 'base' %}
+					<td>Player</td>
+                                        {% endif %}
+					<td>Alliance</td>
+				    </tr>
+				    {% for item in items %}
+				    <tr style="padding: 5px">
+					<td>{{ item.ranking }}</td>
+					<td>{{ item.value|number_format(0, '.', ',') }}</td>
+                                        {% if rankingType.type == 'base' %}
+					<td><a href="{{ url('base', {'world': world.externalId, 'externalId': item.base_id}) }}">{{ item.base_name }}</a></td>
+                                        {% endif %}
+                                        {% if rankingType.type == 'player' or rankingType.type == 'base' %}
+					<td><a href="{{ url('player', {'world': world.externalId, 'externalId': item.player_id}) }}">{{ item.player_name }}</a></td>
+                                        {% endif %}
+					<td>
+                                        {% if item.alliance_id == '' %}
+                                        none
+                                        {% else %}
+                                        <a href="{{ url('alliance', {'world': world.externalId, 'externalId': item.alliance_id}) }}">{{ item.alliance_name }}</a>
+                                        {% endif %}
+                                        </td>
+				    </tr>
+					{% include 'HwsCncstatsBundle:adverts:rankings.html.twig' %}
+				    {% endfor %}
+				</table>
+				{% else %}
+				<div style="width: 100%; text-align: center; color: red">
+				    No results found, please select another date.
+				</div>
+				{% endif %}
+			</div>
+                        {% if items|length > 0 %}
+                                {% include 'HwsCncstatsBundle:facebook:comments.html.twig' %}
+                        {% endif %}
+		</div>
+<input type="hidden" id="worldId" value="{{ world.externalId }}" />
+<input type="hidden" id="rankingType" value="{{ rankingType.id }}" />
+{% endblock %}
+{% block javascripts %}
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
+<script src="/bundles/hwscncstats/js/compareLib.js"></script>
+<script src="/bundles/hwscncstats/js/dateLib.js"></script>
+<script src="/bundles/hwscncstats/js/rankings.js"></script>
+{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" type="text/css" />
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends '::base.html.twig' %}
+{% block title %}Points of Interest on {{ world.name }} - {% endblock %}
+{% block body %}
+		<div id="content-full">
+			<div id="box1">
+				<h2 class="title">Points of Interest on {{ world.name }}</h2>
+			</div>
+                        <div style="padding-bottom: 25px; padding-left: 25px">
+                            <a href="{{ url('download_csv_pois', { 'world': world.externalId }) }}">download CSV</a>
+                        </div>
+			<div>
+				{% if items|length > 0 %}
+				<table width="100%">
+				    <tr>
+					<td{% if sortedBy == 'level' %} class="sorted"{% endif %}><a href="{{ url('pois_world_sort', {'world': world.externalId, 'sort': 'level'}) }}">Level</a></td>
+					<td>Points</td>
+                    <td{% if sortedBy == 'distance' %} class="sorted"{% endif %}><a href="{{ url('pois_world_sort', {'world': world.externalId, 'sort': 'distance'}) }}">Distance from center</a></td>
+					<td>Type</td>
+					<td>Map</td>
+					<td>Owner</td>
+				    </tr>
+				    {% for item in items %}
+					{% include 'HwsCncstatsBundle:adverts:lists.html.twig' %}
+					{% if item.level != '' %}
+				    <tr style="padding: 5px">
+					<td>{{ item.level }}</td>
+					<td>{{ item.points|number_format(0, '.', ',') }}</td>
+					<td>{{ item.distance|number_format(0, '.', ',') }}</td>
+					<td>{% if item.type > 0 %}{{ types[item.type] }}{% endif %}</td>
+                    <td><a target="_blank" rel="nofollow" href="{{ map_service.getLink(world.externalId, 0, item.x ~ ':' ~ item.y) }}">view</a></td>
+					<td>
+                        {% if item.allianceId == 0 %}
+                        no alliance
+                        {% else %}
+                        <a href="{{ url('alliance_world_externalId', {'world': world.externalId, 'externalId': attribute(alliances, item.allianceId).externalId}) }}">{{ attribute(alliances, item.allianceId).name }}</a>
+                        {% endif %}
+                    </td>
+				    </tr>
+					{% endif %}
+				    {% endfor %}
+				</table>
+				{% else %}
+				<div style="width: 100%; text-align: center; color: red">
+				    No results found.
+				</div>
+				{% endif %}
+			</div>
+            {% include 'HwsCncstatsBundle::pagination.html.twig' %}
+		</div>
+{% endblock %}

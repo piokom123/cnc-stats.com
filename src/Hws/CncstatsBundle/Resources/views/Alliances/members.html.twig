@@ -1,0 +1,47 @@
+{% extends '::base.html.twig' %}
+{% block title %}Alliance {{ item.name }} members on {{ world.name }} on {{ selectedDate }} - {% endblock %}
+{% block body %}
+		<div id="content-full">
+			<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+			<script type="text/javascript">
+			    google.load("visualization", "1", {packages:["corechart", 'table', 'treemap', 'gauge']});
+			    google.load('jquery', '1.6.0');
+			</script>
+			<div id="box1">
+				<h2 class="title">{{ item.name }} members on {{ selectedDate }}</h2>
+				<div style="text-align: center"><a href="{{ url('alliance_world_externalId_date', {'world': world.externalId, 'externalId': item.externalId, 'date': selectedDate}) }}">go back to statistics</a></div>
+			</div>
+
+            {% if members|length == 0 %}
+            <div style="width: 100%; text-align: center; color: red">
+                {% if selectedDate == date()|date('Y-m-d') %}
+                There is no data for this date yet. Please check again after few hours.
+                {% else %}
+                No results found. Probably this alliance was created after selected date.
+                {% endif %}
+            </div>
+            {% else %}
+			<div style="padding-top: 15px">
+			    <h3 class="headtext">List</h3>
+			    <table width="60%" style="margin-left: auto; margin-right: auto;">
+				<tr>
+				    <td>Alliance ranking</td>
+				    <td>Global ranking</td>
+				    <td>Name</td>
+				    <td>Score</td>
+				    <td>Bases</td>
+				</tr>
+				{% for member in members %}
+				<tr>
+                    <td>{{ loop.index }}</td>
+				    <td>{{ member.scoreRanking }}</td>
+				    <td><a href="{{ url('player_world_externalId_date', {'world': world.externalId, 'externalId': member.externalId, 'date': selectedDate}) }}">{{ attribute(players, member.externalId).name }}</a></td>
+				    <td>{{ member.scoreOverall|number_format(0, '.', ',') }}</td>
+				    <td>{{ member.basesCount }}</td>
+				</tr>
+				{% endfor %}
+			    </table>
+			</div>
+            {% endif %}
+		</div>
+{% endblock %}

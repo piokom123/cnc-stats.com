@@ -1,0 +1,34 @@
+{% extends '::base.html.twig' %}
+{% block title %}Global rankings - {% endblock %}
+{% block keywords %}rankings, global rankings, best player, best alliance, {% endblock %}
+{% block description %}C&amp;C Tiberium Alliances global rankings{% endblock %}
+{% block body %}
+		<div id="content-full">
+			<div id="box1">
+				<h2 class="title">Global rankings</h2>
+				<p>Want to know who is currently the best player in Tiberium Alliances? Or maybe you're looking for most aggresive alliance?.</p>
+				<p>Check out our global rankings to find it out!</p><br />
+
+				<h2 class="title">How it works?</h2>
+				<p>Every day about 1:15 PM we are getting statistics from previous day <b>from all worlds</b> and selecting 25 best players
+                                in few, listed below, categories. Just select one and view top players!</p>
+                                <br />
+				<p>If you're interested, you can also check top 5 players in same categories for each separated world.
+                                Link to that rankings is placed in top menu after selecting world.</p>
+                                
+                                <br /><br />
+				<h2 class="title">Players rankings</h2>
+                                <p><a href="{{ url('global_ranking', {'type': 2}) }}">Most active</a> - players who gained most score points</p>
+                                <p><a href="{{ url('global_ranking', {'type': 4}) }}">Most aggresive</a> - players who destroyed most bases (PVP + PVE)</p>
+                                <p><a href="{{ url('global_ranking', {'type': 6}) }}">Most aggresive (PVP)</a> - players who destroyed most bases (PVP)</p>
+                                <p><a href="{{ url('global_ranking', {'type': 8}) }}">Most aggresive (PVE)</a> - players who destroyed most bases (PVE)</p>
+                                
+                                <br /><br />
+				<h2 class="title">Alliances rankings</h2>
+                                <p><a href="{{ url('global_ranking', {'type': 10}) }}">Most active</a> - alliances which gained most score points</p>
+                                <p><a href="{{ url('global_ranking', {'type': 12}) }}">Most aggresive</a> - alliances which destroyed most bases (PVP + PVE)</p>
+                                <p><a href="{{ url('global_ranking', {'type': 14}) }}">Most aggresive (PVP)</a> - alliances which destroyed most bases (PVP)</p>
+                                <p><a href="{{ url('global_ranking', {'type': 16}) }}">Most aggresive (PVE)</a> - alliances which destroyed most bases (PVE)</p>
+			</div>
+		</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends '::base.html.twig' %}
+{% block title %}Alliance {{ alliance.name }} on {{ world.name }}- {% endblock %}
+{% block keywords %}alliance {{ alliance.name }} statistics, alliance {{ alliance.name }} score, {{ alliance.name }}, {% endblock %}
+{% block description %}C&amp;C Tiberium Alliances {{ alliance.name }} alliance detailed statistics{% endblock %}
+{% block body %}
+		<div id="content-full">
+			<div id="box1">
+				<h2 class="title">Alliance "{{ alliance.name }}" on {{ world.name }}</h2>
+				<div style="text-align: center"><a href="{{ url('alliances_world', {'world': world.externalId}) }}">go back to list</a></div>
+                <div style="text-align: right">Situation on {{ selectedDate }}</div>
+			</div>
+
+            <div style="width: 100%; text-align: center; color: red">
+                No results found, please select another date.
+            </div>
+        </div>
+{% endblock %}
